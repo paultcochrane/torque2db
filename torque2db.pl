@@ -6,13 +6,26 @@ torque2db - save Torque (PBS) accounting data into a database
 
 =head1 SYNOPSIS
 
-torque2db
+torque2db [--verbose] [--start YYYYMMDD] [--end YYYYMMDD]
 
 =head1 DESCRIPTION
 
 Processes the data in C</var/spool/torque/server_priv/accounting> and saves
 this information into an SQLite database for further processing with other
 tools.
+
+=head2 Options
+
+=over 4
+
+=item C<--start YYYYMMDD>   Start processing from a given date
+
+=item C<--end YYYYMMDD>     Process up to given date
+                            (used in combination with C<--start>)
+
+=item C<--verbose>          Print verbose information when processing
+
+=back
 
 =head2 Data Description
 
