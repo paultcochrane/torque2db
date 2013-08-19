@@ -103,7 +103,7 @@ my $table = 'jobs';
 my $dbh = init_database( $table );
 
 my $accounting_path = "/var/spool/torque/server_priv/accounting";
-my @accounting_files = get_accounting_files( $accounting_path );
+my @accounting_files = get_accounting_files( $accounting_path, $start_date, $end_date );
 
 for my $file ( @accounting_files ) {
     my $accounting_file = $accounting_path . "/" . $file;
@@ -194,6 +194,8 @@ Return all relevant accounting data files at the given path
 
 sub get_accounting_files {
     my $accounting_path = shift;
+    my $start_date = shift;
+    my $end_date = shift;
 
     # get a list of files to process
     opendir my $dirh, $accounting_path or
@@ -201,14 +203,17 @@ sub get_accounting_files {
     my @all_files = readdir($dirh);
     closedir $dirh;
 
-    my @accounting_files;
-    for my $file ( @all_files ) {
-        push @accounting_files, $file if $file =~ m/^\d{8}$/;
-    }
-
+    my @accounting_files = grep m/^\d{8}$/, @all_files;
     my @sorted_accounting_files = sort { $a <=> $b } @accounting_files;
 
-    return @sorted_accounting_files;
+    my @files_to_process;
+    for my $file ( @sorted_accounting_files ) {
+        next if ( $start_date and $file < $start_date );
+        last if ( $end_date and $file > $end_date );
+        push @files_to_process, $file;
+    }
+
+    return @files_to_process;
 }
 
 =item process_data( $accounting_file, $table )
