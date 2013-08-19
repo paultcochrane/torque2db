@@ -101,11 +101,11 @@ check_options($start_date, $end_date);
 
 my $accounting_path = "/var/spool/torque/server_priv/accounting";
 my $day = "20130819";
-our $table = 'jobs';
+my $table = 'jobs';
 
-my $dbh = init_database();
+my $dbh = init_database( $table );
 
-process_data_for_day( $day );
+process_data_for_day( $day, $table );
 
 # clean up the DB like a good boy
 $dbh->disconnect();
@@ -135,13 +135,17 @@ sub check_options {
         die "When specifying an end date, a start date is required.\n";
     }
 }
-=item init_database
 
-Initialise the database and return the database file handle.
+=item init_database( $table )
+
+Initialise the database for the given table and return the database file
+handle.
 
 =cut
 
 sub init_database {
+    my $table = shift;
+
     my $dbfile = 'torque.db';      # the database file
     my $dbh = DBI->connect(        # connect to the database, create if needed
             "dbi:SQLite:dbname=$dbfile", # DSN: dbi, driver, database file
@@ -179,14 +183,16 @@ EOD
     return $dbh;
 }
 
-=item process_data_for_day
+=item process_data_for_day( $day, $table )
 
-Process the accounting data for the given day.
+Process the accounting data for the given day and write to the given
+database table.
 
 =cut
 
 sub process_data_for_day {
     my $day = shift;
+    my $table = shift;
 
     print "Processing data for $day\n";
 
