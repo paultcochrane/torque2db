@@ -5,7 +5,11 @@ SQLite database.  It might not be fast, but it does the job.
 Required packages
 -----------------
 
+Debian:
     sudo aptitude install libdbi-perl libclass-dbi-sqlite-perl sqlite3
+
+Red Hat:
+    sudo yum install perl-DBI perl-Class-DBI-SQLite sqlite
 
 Usage
 -----
