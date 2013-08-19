@@ -110,58 +110,21 @@ if ( $end_date and not $start_date ) {
     die "When specifying an end date, a start date is required.\n";
 }
 
-my $accounting_file = "20130819";
+my $accounting_path = "/var/spool/torque/server_priv/accounting";
+my $day = "20130819";
 our $table = 'jobs';
-
-# read in the accounting data for the given file
-open my $fh, "<", $accounting_file
-    or die "Could not open accounting file '$accounting_file': $!\n";;
-my @raw_accounting_data = <$fh>;
-close $fh;
-
-# strip out lines which don't contain ';E;'
-# i.e. lines which don't record an executed job
-my @executed_job_data = grep(m/;E;/, @raw_accounting_data);
 
 my $dbh = init_database();
 
-# for each job, extract the relevant information and save it in the DB
-for my $line ( @executed_job_data ) {
-    my $job = Job->new();
-    $job->set_data($line);
+process_data_for_day( $day );
 
-    print "Adding data for job id: ", $job->jobid, "\n" if $verbose;
-
-    # add job information to the database
-    my $insert_string = "insert into $table values ("
-                            . $job->jobid . ","
-                            . "'" . $job->username . "'" . ","
-                            . "'" . $job->groupname . "'" . ","
-                            . "'" . $job->queue . "'" . ","
-                            . $job->queue_time . ","
-                            . $job->start_time . ","
-                            . $job->completion_time . ","
-                            . "'" . $job->allocated_hostlist . "'" . ","
-                            . $job->used_cputime . ","
-                            . $job->allocated_tasks . ","
-                            . $job->required_walltime . ","
-                            . $job->used_walltime . ","
-                            . $job->required_memory . ","
-                            . $job->used_memory . ","
-                            . $job->used_virtual_memory . ","
-                            . $job->exit_status
-                            . ")";
-
-    $dbh->do($insert_string);
-}
-
+# clean up the DB like a good boy
 $dbh->disconnect();
-
 
 
 =item init_database
 
-Initialise the database and return the database file handle
+Initialise the database and return the database file handle.
 
 =cut
 
@@ -201,6 +164,59 @@ EOD
     $dbh->do($create_table_string) or die $DBI::errstr;
 
     return $dbh;
+}
+
+=item process_data_for_day
+
+Process the accounting data for the given day.
+
+=cut
+
+sub process_data_for_day {
+    my $day = shift;
+
+    print "Processing data for $day\n";
+
+    my $accounting_file = $day;
+    # read in the accounting data for the given file
+    open my $fh, "<", $accounting_file
+        or die "Could not open accounting file '$accounting_file': $!\n";;
+    my @raw_accounting_data = <$fh>;
+    close $fh;
+
+    # strip out lines which don't contain ';E;'
+    # i.e. lines which don't record an executed job
+    my @executed_job_data = grep(m/;E;/, @raw_accounting_data);
+
+    # for each job, extract the relevant information and save it in the DB
+    for my $line ( @executed_job_data ) {
+        my $job = Job->new();
+        $job->set_data($line);
+
+        print "Adding data for job id: ", $job->jobid, "\n" if $verbose;
+
+        # add job information to the database
+        my $insert_string = "insert into $table values ("
+                                . $job->jobid . ","
+                                . "'" . $job->username . "'" . ","
+                                . "'" . $job->groupname . "'" . ","
+                                . "'" . $job->queue . "'" . ","
+                                . $job->queue_time . ","
+                                . $job->start_time . ","
+                                . $job->completion_time . ","
+                                . "'" . $job->allocated_hostlist . "'" . ","
+                                . $job->used_cputime . ","
+                                . $job->allocated_tasks . ","
+                                . $job->required_walltime . ","
+                                . $job->used_walltime . ","
+                                . $job->required_memory . ","
+                                . $job->used_memory . ","
+                                . $job->used_virtual_memory . ","
+                                . $job->exit_status
+                                . ")";
+
+        $dbh->do($insert_string);
+    }
 }
 
 # vim: expandtab shiftwidth=4
