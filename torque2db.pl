@@ -99,7 +99,7 @@ my $dbh = DBI->connect(        # connect to your database, create if needed
 # create the table if it doesn't already exist
 my $table = 'jobs';
 my $create_table_string = <<"EOD";
-create table if not exists $table ( id INT PRIMARY KEY,
+create table $table ( id INT PRIMARY KEY,
                       username TEXT,
                       groupname TEXT,
                       queue TEXT,
@@ -118,6 +118,7 @@ create table if not exists $table ( id INT PRIMARY KEY,
                     )
 EOD
 
+$dbh->do("drop table if exists $table");
 $dbh->do($create_table_string) or die $DBI::errstr;
 
 # for each job, extract the relevant information and save it in the DB
