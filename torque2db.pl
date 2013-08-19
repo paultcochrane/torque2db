@@ -95,20 +95,9 @@ my $result = GetOptions(
                 "end=i"   => \$end_date,
                 "verbose" => \$verbose,
         );
+die "An error occured in options processing.\n" if not $result;
 
-# if start or end dates are given, make sure that they are in the correct
-# format
-if ( $start_date and $start_date !~ m/^\d{8}$/ ) {
-    die "Start date format incorrect.  Expected YYYYMMDD but got $start_date.\n";
-}
-
-if ( $end_date and $end_date !~ m/^\d{8}$/ ) {
-    die "End date format incorrect.  Expected YYYYMMDD but got $end_date.\n";
-}
-
-if ( $end_date and not $start_date ) {
-    die "When specifying an end date, a start date is required.\n";
-}
+check_options($start_date, $end_date);
 
 my $accounting_path = "/var/spool/torque/server_priv/accounting";
 my $day = "20130819";
@@ -122,6 +111,30 @@ process_data_for_day( $day );
 $dbh->disconnect();
 
 
+=item check_options( $start_date, $end_date )
+
+Check the input options
+
+=cut
+
+sub check_options {
+    my $start_date = shift;
+    my $end_date = shift;
+
+    # if start or end dates are given, make sure that they are in the correct
+    # format
+    if ( $start_date and $start_date !~ m/^\d{8}$/ ) {
+        die "Start date format incorrect.  Expected YYYYMMDD but got $start_date.\n";
+    }
+
+    if ( $end_date and $end_date !~ m/^\d{8}$/ ) {
+        die "End date format incorrect.  Expected YYYYMMDD but got $end_date.\n";
+    }
+
+    if ( $end_date and not $start_date ) {
+        die "When specifying an end date, a start date is required.\n";
+    }
+}
 =item init_database
 
 Initialise the database and return the database file handle.
