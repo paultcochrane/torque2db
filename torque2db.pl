@@ -72,7 +72,7 @@ my @rows  = qw(jobid user ugroup queue queue_time start_time completion_time
 
 # create the table if it doesn't already exist
 my $create_table_string = <<"EOD";
-create table $table ( id INT PRIMARY KEY,
+create table if not exists $table ( id INT PRIMARY KEY,
                       user TEXT,
                       ugroup TEXT,
                       queue TEXT,
@@ -91,7 +91,6 @@ create table $table ( id INT PRIMARY KEY,
                     )
 EOD
 
-$dbh->do("drop table if exists $table");
 $dbh->do($create_table_string) or die $DBI::errstr;
 
 $dbh->disconnect();
