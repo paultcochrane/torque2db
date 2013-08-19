@@ -111,6 +111,7 @@ if ( $end_date and not $start_date ) {
 }
 
 my $accounting_file = "20130819";
+our $table = 'jobs';
 
 # read in the accounting data for the given file
 open my $fh, "<", $accounting_file
@@ -122,40 +123,7 @@ close $fh;
 # i.e. lines which don't record an executed job
 my @executed_job_data = grep(m/;E;/, @raw_accounting_data);
 
-my $dbfile = 'torque.db';      # your database file
-my $dbh = DBI->connect(        # connect to your database, create if needed
-        "dbi:SQLite:dbname=$dbfile", # DSN: dbi, driver, database file
-        "",                          # no user
-        "",                          # no password
-        { RaiseError => 1,           # complain if something goes wrong
-          AutoCommit => 1,           # commit changes to db automatically
-        },
-                ) or die $DBI::errstr;
-
-# create the table if it doesn't already exist
-my $table = 'jobs';
-my $create_table_string = <<"EOD";
-create table $table ( id INT PRIMARY KEY,
-                      username TEXT,
-                      groupname TEXT,
-                      queue TEXT,
-                      queue_time INT,
-                      start_time INT,
-                      completion_time INT,
-                      allocated_hostlist TEXT,
-                      used_cputime INT,
-                      allocated_tasks INT,
-                      required_walltime INT,
-                      used_walltime INT,
-                      required_memory INT,
-                      used_memory INT,
-                      used_virtual_memory INT,
-                      exit_status INT
-                    )
-EOD
-
-$dbh->do("drop table if exists $table");
-$dbh->do($create_table_string) or die $DBI::errstr;
+my $dbh = init_database();
 
 # for each job, extract the relevant information and save it in the DB
 for my $line ( @executed_job_data ) {
@@ -188,5 +156,51 @@ for my $line ( @executed_job_data ) {
 }
 
 $dbh->disconnect();
+
+
+
+=item init_database
+
+Initialise the database and return the database file handle
+
+=cut
+
+sub init_database {
+    my $dbfile = 'torque.db';      # the database file
+    my $dbh = DBI->connect(        # connect to the database, create if needed
+            "dbi:SQLite:dbname=$dbfile", # DSN: dbi, driver, database file
+            "",                          # no user
+            "",                          # no password
+            { RaiseError => 1,           # complain if something goes wrong
+            AutoCommit => 1,           # commit changes to db automatically
+            },
+                    ) or die $DBI::errstr;
+
+    # create the table if it doesn't already exist
+    my $create_table_string = <<"EOD";
+create table $table ( id INT PRIMARY KEY,
+                      username TEXT,
+                      groupname TEXT,
+                      queue TEXT,
+                      queue_time INT,
+                      start_time INT,
+                      completion_time INT,
+                      allocated_hostlist TEXT,
+                      used_cputime INT,
+                      allocated_tasks INT,
+                      required_walltime INT,
+                      used_walltime INT,
+                      required_memory INT,
+                      used_memory INT,
+                      used_virtual_memory INT,
+                      exit_status INT
+                      )
+EOD
+
+    $dbh->do("drop table if exists $table");
+    $dbh->do($create_table_string) or die $DBI::errstr;
+
+    return $dbh;
+}
 
 # vim: expandtab shiftwidth=4
