@@ -19,7 +19,6 @@ sub new {
     $self->{'used_virtual_memory'}     = undef;
     $self->{'allocated_tasks'}         = undef;
     $self->{'required_ncpus'}          = undef;
-    $self->{'required_tasks_per_node'} = undef;
     $self->{'used_cputime'}            = undef;
     $self->{'required_walltime'}       = undef;
     $self->{'used_walltime'}           = undef;
@@ -157,12 +156,6 @@ sub required_ncpus {
     my $self = shift;
     if (@_) { $self->{'required_ncpus'} = shift }
     return $self->{'required_ncpus'};
-}
-
-sub required_tasks_per_node {
-    my $self = shift;
-    if (@_) { $self->{'required_tasks_per_node'} = shift }
-    return $self->{'required_tasks_per_node'};
 }
 
 sub used_cputime {
