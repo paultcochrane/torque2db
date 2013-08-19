@@ -222,19 +222,6 @@ sub slots {
     return $self->allocated_tasks;
 }
 
-=item npl()
-
-Return the NPL (Niedersächsischer-Prozessor-Leistung) value.
-
-This is simply the amount of used walltime times the number of slots.
-
-=cut
-
-sub npl {
-    my $self = shift;
-    return $self->walltime * $self->slots;
-}
-
 =item required_ncpus()
 
 Get/set the requested number of CPUs if this value had been set in the job.
