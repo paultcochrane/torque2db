@@ -1,6 +1,12 @@
 package Job;
 use strict;
 
+=head1 NAME
+
+Job.pm - handle Torque C<Job> objects
+
+=cut
+
 # the object constructor
 sub new {
     my $class = shift;
@@ -26,13 +32,34 @@ sub new {
     return $self;
 }
 
+=head1 DESCRIPTION
+
+=head2 Methods
+
+=cut
+
 # methods to access data
 # with arguments they set the value, without them they retrieve the value
+
+=over 4
+
+=item jobid()
+
+Get/set the Torque job id (only the numerical part).
+
+=cut
+
 sub jobid {
     my $self = shift;
     if (@_) { $self->{'jobid'} = shift }
     return $self->{'jobid'};
 }
+
+=item username()
+
+Get/set the username of the user who ran the job.
+
+=cut
 
 sub username {
     my $self = shift;
@@ -40,11 +67,23 @@ sub username {
     return $self->{'username'};
 }
 
+=item groupname()
+
+Get/set the unix group of the user who ran the job.
+
+=cut
+
 sub groupname {
     my $self = shift;
     if (@_) { $self->{'groupname'} = shift }
     return $self->{'groupname'};
 }
+
+=item queue()
+
+Get/set the queue name where the job ran.
+
+=cut
 
 sub queue {
     my $self = shift;
@@ -52,11 +91,23 @@ sub queue {
     return $self->{'queue'};
 }
 
+=item queue_time()
+
+Get/set when the job was queued (in seconds since the epoch).
+
+=cut
+
 sub queue_time {
     my $self = shift;
     if (@_) { $self->{'queue_time'} = shift }
     return $self->{'queue_time'};
 }
+
+=item start_time()
+
+Get/set when the job started (in seconds since the epoch).
+
+=cut
 
 sub start_time {
     my $self = shift;
@@ -64,11 +115,23 @@ sub start_time {
     return $self->{'start_time'};
 }
 
+=item completion_time()
+
+Get/set when the job completed (in seconds since the epoch).
+
+=cut
+
 sub completion_time {
     my $self = shift;
     if (@_) { $self->{'completion_time'} = shift }
     return $self->{'completion_time'};
 }
+
+=item required_memory()
+
+Get/set how much RAM was requested for the job.
+
+=cut
 
 sub required_memory {
     my $self = shift;
@@ -80,6 +143,12 @@ sub required_memory {
     return $self->{'required_memory'};
 }
 
+=item used_memory()
+
+Get/set how much RAM was actually used by the job.
+
+=cut
+
 sub used_memory {
     my $self = shift;
     if (@_) {
@@ -90,6 +159,12 @@ sub used_memory {
     return $self->{'used_memory'};
 }
 
+=item used_virtual_memory()
+
+Get/set how much virtual memory was used by the job.
+
+=cut
+
 sub used_virtual_memory {
     my $self = shift;
     if (@_) {
@@ -99,6 +174,12 @@ sub used_virtual_memory {
     }
     return $self->{'used_virtual_memory'};
 }
+
+=item allocated_tasks()
+
+Get/set how many processors were allocated for the job.
+
+=cut
 
 sub allocated_tasks {
     my $self = shift;
@@ -128,15 +209,37 @@ sub allocated_tasks {
     }
 }
 
+=item slots()
+
+Return how many processors were allocated for the job.
+
+This is just a bit of syntax sugar.
+
+=cut
+
 sub slots {
     my $self = shift;
     return $self->allocated_tasks;
 }
 
+=item npl()
+
+Return the NPL (Niedersächsischer-Prozessor-Leistung) value.
+
+This is simply the amount of used walltime times the number of slots.
+
+=cut
+
 sub npl {
     my $self = shift;
     return $self->walltime * $self->slots;
 }
+
+=item required_ncpus()
+
+Get/set the requested number of CPUs if this value had been set in the job.
+
+=cut
 
 sub required_ncpus {
     my $self = shift;
@@ -144,11 +247,23 @@ sub required_ncpus {
     return $self->{'required_ncpus'};
 }
 
+=item used_cputime()
+
+Get/set the amount of cputime used by the job.
+
+=cut
+
 sub used_cputime {
     my $self = shift;
     if (@_) { $self->{'used_cputime'} = $self->time_string_to_seconds(shift) }
     return $self->{'used_cputime'};
 }
+
+=item required_walltime()
+
+Get/set the amount of walltime requested by the job.
+
+=cut
 
 sub required_walltime {
     my $self = shift;
@@ -156,11 +271,26 @@ sub required_walltime {
     return $self->{'required_walltime'};
 }
 
+=item used_walltime()
+
+Get/set the amount of walltime used by the job.
+
+This is the value as reported by Torque, which isn't necessarily correct.
+See L<walltime()>.
+
+=cut
+
 sub used_walltime {
     my $self = shift;
     if (@_) { $self->{'used_walltime'} = $self->time_string_to_seconds(shift) }
     return $self->{'used_walltime'};
 }
+
+=item allocated_hostlist()
+
+Get/set the list of hosts allocated to execute the job.
+
+=cut
 
 sub allocated_hostlist {
     my $self = shift;
@@ -168,17 +298,35 @@ sub allocated_hostlist {
     return $self->{'allocated_hostlist'};
 }
 
+=item exit_status()
+
+Get/set the exit status of the job as reported by Torque.
+
+=cut
+
 sub exit_status {
     my $self = shift;
     if (@_) { $self->{'exit_status'} = shift }
     return $self->{'exit_status'};
 }
 
+=item waittime()
+
+Return the time the job had to wait before starting.
+
+=cut
+
 sub waittime {
     my $self = shift;
     my $waittime = $self->start_time - $self->queue_time;
     return $waittime;
 }
+
+=item set_data()
+
+Process the input data and save it in the C<Job> object.
+
+=cut
 
 sub set_data {
     my $self = shift;
@@ -257,11 +405,26 @@ sub set_data {
     $self->exit_status($exit_status) if defined $exit_status;
 }
 
+=item walltime()
+
+Return the walltime used by the job.
+
+This is the number of seconds between the start time and the completion
+time.
+
+=cut
+
 sub walltime {
     my $self = shift;
     my $walltime = $self->completion_time - $self->start_time;
     return $walltime;
 }
+
+=item print_job()
+
+Print the keys and values of the C<Job> object to the terminal.
+
+=cut
 
 sub print_job {
     my $self = shift;
@@ -269,6 +432,12 @@ sub print_job {
 	print "$key: $self->{$key}\n";
     }
 }
+
+=item set_job_data()
+
+Process the job data list and save the information into the C<Job> object.
+
+=cut
 
 sub set_job_data {
     my $self = shift;
@@ -294,6 +463,12 @@ sub set_job_data {
     $self->{'job_data'} = \%job_data;
 }
 
+=item get_job_info_from_key()
+
+Return the job data information from the given key.
+
+=cut
+
 sub get_job_info_from_key {
     my $self = shift;
     my $key = shift;
@@ -301,6 +476,12 @@ sub get_job_info_from_key {
     my $data = ${$self->{'job_data'}}{$key};
     return defined $data ? $data : undef;
 }
+
+=item mem_string_to_kb()
+
+Convert the given memory string into a value in kB.
+
+=cut
 
 sub mem_string_to_kb {
     my $self = shift;
@@ -330,6 +511,12 @@ sub mem_string_to_kb {
     }
     return $magnitude_value*$memory_value;
 }
+
+=item time_string_to_seconds()
+
+Convert a time string (HH:MM:SS) into raw seconds.
+
+=cut
 
 sub time_string_to_seconds {
     my $self = shift;
