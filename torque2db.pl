@@ -85,16 +85,6 @@ close $fh;
 # i.e. lines which don't record an executed job
 my @executed_job_data = grep(m/;E;/, @raw_accounting_data);
 
-# for each job, extract the relevant information
-my %jobs;
-for my $line ( @executed_job_data ) {
-    my $job = Job->new();
-    $job->set_data($line);
-
-    # add job information to main jobs hash
-    $jobs{$job->jobid} = $job;
-}
-
 my $dbfile = 'torque.db';      # your database file
 my $dbh = DBI->connect(        # connect to your database, create if needed
         "dbi:SQLite:dbname=$dbfile", # DSN: dbi, driver, database file
@@ -128,6 +118,34 @@ create table if not exists $table ( id INT PRIMARY KEY,
 EOD
 
 $dbh->do($create_table_string) or die $DBI::errstr;
+
+# for each job, extract the relevant information and save it in the DB
+for my $line ( @executed_job_data ) {
+    my $job = Job->new();
+    $job->set_data($line);
+
+    # add job information to the database
+    my $insert_string = "insert into $table values ("
+                            . $job->jobid . ","
+                            . "'" . $job->username . "'" . ","
+                            . "'" . $job->groupname . "'" . ","
+                            . "'" . $job->queue . "'" . ","
+                            . $job->queue_time . ","
+                            . $job->start_time . ","
+                            . $job->completion_time . ","
+                            . "'" . $job->allocated_hostlist . "'" . ","
+                            . $job->used_cputime . ","
+                            . $job->allocated_tasks . ","
+                            . $job->required_walltime . ","
+                            . $job->used_walltime . ","
+                            . $job->required_memory . ","
+                            . $job->used_memory . ","
+                            . $job->used_virtual_memory . ","
+                            . $job->exit_status
+                            . ")";
+
+    $dbh->do($insert_string);
+}
 
 $dbh->disconnect();
 
