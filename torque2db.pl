@@ -22,9 +22,9 @@ Here is the meaning of the fields in the database
 
 =item jobid                Job ID
 
-=item user                 Username
+=item username             Username
 
-=item ugroup               User group
+=item groupname            User group
 
 =item queue                Queue name
 
@@ -34,7 +34,7 @@ Here is the meaning of the fields in the database
 
 =item completion_time      Job end time   (in seconds since epoch)
 
-=item exec_host            Where the job executed (as a string)
+=item allocated_hostlist   Where the job executed (as a string)
 
 =item used_cputime         CPU time used by job
 
@@ -109,13 +109,13 @@ my $dbh = DBI->connect(        # connect to your database, create if needed
 my $table = 'jobs';
 my $create_table_string = <<"EOD";
 create table if not exists $table ( id INT PRIMARY KEY,
-                      user TEXT,
-                      ugroup TEXT,
+                      username TEXT,
+                      groupname TEXT,
                       queue TEXT,
                       queue_time INT,
                       start_time INT,
                       completion_time INT,
-                      exec_host TEXT,
+                      allocated_hostlist TEXT,
                       used_cputime INT,
                       allocated_tasks INT,
                       required_walltime INT,
