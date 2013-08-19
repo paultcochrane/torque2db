@@ -105,6 +105,8 @@ my $table = 'jobs';
 
 my $dbh = init_database( $table );
 
+my @accounting_files = get_accounting_files( $accounting_path );
+
 process_data_for_day( $day, $table );
 
 # clean up the DB like a good boy
@@ -181,6 +183,31 @@ EOD
     $dbh->do($create_table_string) or die $DBI::errstr;
 
     return $dbh;
+}
+
+=item get_accounting_files( $accounting_path )
+
+Return all relevant accounting data files at the given path
+
+=cut
+
+sub get_accounting_files {
+    my $accounting_path = shift;
+
+    # get a list of files to process
+    opendir my $dirh, $accounting_path or
+        die "Could not open $accounting_path: $!\n";
+    my @all_files = readdir($dirh);
+    closedir $dirh;
+
+    my @accounting_files;
+    for my $file ( @all_files ) {
+        push @accounting_files, $file if $file =~ m/^\d{8}$/;
+    }
+
+    my @sorted_accounting_files = sort { $a <=> $b } @accounting_files;
+
+    return @sorted_accounting_files;
 }
 
 =item process_data_for_day( $day, $table )
