@@ -72,9 +72,7 @@ use strict;
 use autodie;
 
 use DBI;
-
 use Job;
-use User;
 
 my $accounting_file = "20130819";
 
