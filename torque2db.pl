@@ -82,7 +82,6 @@ it under the same terms as Perl itself.
 
 use warnings;
 use strict;
-use autodie;
 use Getopt::Long;
 
 use DBI;
@@ -114,7 +113,8 @@ if ( $end_date and not $start_date ) {
 my $accounting_file = "20130819";
 
 # read in the accounting data for the given file
-open my $fh, "<", $accounting_file;
+open my $fh, "<", $accounting_file
+    or die "Could not open accounting file '$accounting_file': $!\n";;
 my @raw_accounting_data = <$fh>;
 close $fh;
 
