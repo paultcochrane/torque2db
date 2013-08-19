@@ -20,7 +20,7 @@ sub new {
     $self->{'allocated_tasks'}         = undef;
     $self->{'required_ncpus'}          = undef;
     $self->{'required_tasks_per_node'} = undef;
-    $self->{'cputime'}                 = undef;
+    $self->{'used_cputime'}            = undef;
     $self->{'required_walltime'}       = undef;
     $self->{'used_walltime'}           = undef;
     $self->{'allocated_hostlist'}      = undef;
@@ -165,10 +165,10 @@ sub required_tasks_per_node {
     return $self->{'required_tasks_per_node'};
 }
 
-sub cputime {
+sub used_cputime {
     my $self = shift;
-    if (@_) { $self->{'cputime'} = $self->time_string_to_seconds(shift) }
-    return $self->{'cputime'};
+    if (@_) { $self->{'used_cputime'} = $self->time_string_to_seconds(shift) }
+    return $self->{'used_cputime'};
 }
 
 sub required_walltime {
@@ -250,8 +250,8 @@ sub set_data {
     $self->allocated_hostlist($allocated_hostlist);
 
     # should I call this used_cputime?
-    my $cputime = $self->get_job_info_from_key("resources_used.cput");
-    $self->cputime($cputime);
+    my $used_cputime = $self->get_job_info_from_key("resources_used.cput");
+    $self->used_cputime($used_cputime);
 
     my $required_memory = $self->get_job_info_from_key("Resource_List.mem");
     $self->required_memory($required_memory) if defined $required_memory;
