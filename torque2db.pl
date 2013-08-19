@@ -99,15 +99,16 @@ die "An error occured in options processing.\n" if not $result;
 
 check_options($start_date, $end_date);
 
-my $accounting_path = "/var/spool/torque/server_priv/accounting";
-my $day = "20130819";
 my $table = 'jobs';
-
 my $dbh = init_database( $table );
 
+my $accounting_path = "/var/spool/torque/server_priv/accounting";
 my @accounting_files = get_accounting_files( $accounting_path );
 
-process_data_for_day( $day, $table );
+for my $file ( @accounting_files ) {
+    my $accounting_file = $accounting_path . "/" . $file;
+    process_data( $accounting_file, $table );
+}
 
 # clean up the DB like a good boy
 $dbh->disconnect();
@@ -210,20 +211,20 @@ sub get_accounting_files {
     return @sorted_accounting_files;
 }
 
-=item process_data_for_day( $day, $table )
+=item process_data( $accounting_file, $table )
 
-Process the accounting data for the given day and write to the given
-database table.
+Process the accounting data for the given accounting file and write to the
+given database table.
 
 =cut
 
-sub process_data_for_day {
-    my $day = shift;
+sub process_data {
+    my $accounting_file = shift;
     my $table = shift;
 
-    print "Processing data for $day\n";
+    my $day = (split "\/", $accounting_file)[-1];
+    print "Processing data for $day; ";
 
-    my $accounting_file = $day;
     # read in the accounting data for the given file
     open my $fh, "<", $accounting_file
         or die "Could not open accounting file '$accounting_file': $!\n";;
@@ -233,6 +234,8 @@ sub process_data_for_day {
     # strip out lines which don't contain ';E;'
     # i.e. lines which don't record an executed job
     my @executed_job_data = grep(m/;E;/, @raw_accounting_data);
+
+    print "Number of jobs: ", scalar @executed_job_data, "\n";
 
     # for each job, extract the relevant information and save it in the DB
     for my $line ( @executed_job_data ) {
