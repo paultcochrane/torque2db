@@ -15,6 +15,7 @@ use User;
 
 my $accounting_file = "20130819";
 
+# read in the accounting data for the given file
 open my $fh, "<", $accounting_file;
 my @raw_accounting_data = <$fh>;
 close $fh;
