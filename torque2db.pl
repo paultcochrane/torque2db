@@ -70,11 +70,34 @@ it under the same terms as Perl itself.
 use warnings;
 use strict;
 use autodie;
+use Getopt::Long;
 
 use DBI;
 use Job;
 
-my $verbose = 1;
+my $start_date;
+my $end_date;
+my $verbose = 0;
+my $result = GetOptions(
+                "start=i" => \$start_date,
+                "end=i"   => \$end_date,
+                "verbose" => \$verbose,
+        );
+
+# if start or end dates are given, make sure that they are in the correct
+# format
+if ( $start_date and $start_date !~ m/^\d{8}$/ ) {
+    die "Start date format incorrect.  Expected YYYYMMDD but got $start_date.\n";
+}
+
+if ( $end_date and $end_date !~ m/^\d{8}$/ ) {
+    die "End date format incorrect.  Expected YYYYMMDD but got $end_date.\n";
+}
+
+if ( $end_date and not $start_date ) {
+    die "When specifying an end date, a start date is required.\n";
+}
+
 my $accounting_file = "20130819";
 
 # read in the accounting data for the given file
