@@ -25,3 +25,7 @@ Process from a given start date:
 Process in a given date range:
 
     perl torque2db.pl --start YYYYMMDD --end YYYYMMDD
+
+Show a bit more information while processing
+
+    perl torque2db.pl --verbose
