@@ -105,13 +105,8 @@ my $dbh = DBI->connect(        # connect to your database, create if needed
         },
                 ) or die $DBI::errstr;
 
-my $table = 'jobs';
-my @rows  = qw(jobid user ugroup queue queue_time start_time completion_time
-                exec_host used_cputime required_memory allocated_tasks
-                required_ncpus required_walltime used_memory
-                used_virtual_memory exit_status);
-
 # create the table if it doesn't already exist
+my $table = 'jobs';
 my $create_table_string = <<"EOD";
 create table if not exists $table ( id INT PRIMARY KEY,
                       user TEXT,
