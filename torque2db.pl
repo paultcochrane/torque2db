@@ -74,6 +74,7 @@ use autodie;
 use DBI;
 use Job;
 
+my $verbose = 1;
 my $accounting_file = "20130819";
 
 # read in the accounting data for the given file
@@ -123,6 +124,8 @@ $dbh->do($create_table_string) or die $DBI::errstr;
 for my $line ( @executed_job_data ) {
     my $job = Job->new();
     $job->set_data($line);
+
+    print "Adding data for job id: ", $job->jobid, "\n" if $verbose;
 
     # add job information to the database
     my $insert_string = "insert into $table values ("
