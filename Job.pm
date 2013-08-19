@@ -6,7 +6,6 @@ sub new {
     my $class = shift;
     my $self = {};
     $self->{'jobid'}                   = undef;
-    $self->{'required_nodes'}          = undef;
     $self->{'required_tasks'}          = undef;
     $self->{'username'}                = undef;
     $self->{'groupname'}               = undef;
@@ -34,12 +33,6 @@ sub jobid {
     my $self = shift;
     if (@_) { $self->{'jobid'} = shift }
     return $self->{'jobid'};
-}
-
-sub required_nodes {
-    my $self = shift;
-    if (@_) { $self->{'required_nodes'} = shift }
-    return $self->{'required_nodes'};
 }
 
 sub required_tasks {
