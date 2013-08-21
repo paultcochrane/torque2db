@@ -1,0 +1,15 @@
+Ideas for improvement from @gensym:
+ - pack das Skript in das package 'torque2db'
+ - keine globalen Variablen im Skript
+ - und jeglichen 'globalen' Code in eine sub ( z.B. sub run { ... } )
+   packen, und ein 'run() unless caller();' als einzigen 'globalen' Code
+   hinschreiben
+ - Parameter in Funktionen/Methoden nicht mit 'shift' runterholen, sondern
+   mit 'my ( $start_date, $end_date) = @_;' binden...
+ - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser
+   sprintf oder noch besser https://metacpan.org/module/DBIx::Interp nehmen
+ - $self->{'jobid'} hier quoted man den key nicht: $self->{jobid}
+ - im Modul der Konstruktor: $self->{$_} = undef for qw( jobid username
+   groupname queue queue_time start_time completion_time required_memory
+   used_memory used_virtual_memory allocated_tasks required_ncpus used_cputime
+   required_walltime used_walltime allocated_hostlist exit_status );
