@@ -1,5 +1,6 @@
 package Job;
 use strict;
+use warnings;
 
 =head1 NAME
 
