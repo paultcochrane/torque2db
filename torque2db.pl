@@ -111,7 +111,7 @@ my @accounting_files = get_accounting_files( $accounting_path, $start_date, $end
 
 for my $file ( @accounting_files ) {
     my $accounting_file = $accounting_path . "/" . $file;
-    process_data( $accounting_file, $table );
+    process_data( $accounting_file, $table, $verbose );
 }
 
 # clean up the DB like a good boy
@@ -220,16 +220,17 @@ sub get_accounting_files {
     return @files_to_process;
 }
 
-=item process_data( $accounting_file, $table )
+=item process_data( $accounting_file, $table, $verbose )
 
 Process the accounting data for the given accounting file and write to the
-given database table.
+given database table.  Print verbose information if requested.
 
 =cut
 
 sub process_data {
     my $accounting_file = shift;
     my $table = shift;
+    my $verbose = shift;
 
     my $day = (split "\/", $accounting_file)[-1];
     print "Processing data for $day; ";
