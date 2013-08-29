@@ -1,8 +1,4 @@
 Ideas for improvement from @gensym:
- - keine globalen Variablen im Skript
- - und jeglichen 'globalen' Code in eine sub ( z.B. sub run { ... } )
-   packen, und ein 'run() unless caller();' als einzigen 'globalen' Code
-   hinschreiben
  - Parameter in Funktionen/Methoden nicht mit 'shift' runterholen, sondern
    mit 'my ( $start_date, $end_date) = @_;' binden...
  - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser

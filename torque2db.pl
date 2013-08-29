@@ -89,34 +89,36 @@ use Getopt::Long;
 use DBI;
 use Job;
 
-my $start_date;
-my $end_date;
-my $verbose = 0;
-my $result = GetOptions(
-                "start=i" => \$start_date,
-                "end=i"   => \$end_date,
-                "verbose" => \$verbose,
-        );
-die "An error occured in options processing.\n" if not $result;
+sub run {
+    my $start_date;
+    my $end_date;
+    my $verbose = 0;
+    my $result = GetOptions(
+                    "start=i" => \$start_date,
+                    "end=i"   => \$end_date,
+                    "verbose" => \$verbose,
+            );
+    die "An error occured in options processing.\n" if not $result;
 
-check_options($start_date, $end_date);
+    check_options($start_date, $end_date);
 
-my $table = 'jobs';
-my $dbh = init_database( $table );
+    my $table = 'jobs';
+    my $dbh = init_database( $table );
 
-my $accounting_path = "/var/spool/torque/server_priv/accounting";
-$accounting_path = "." if not -e $accounting_path;
+    my $accounting_path = "/var/spool/torque/server_priv/accounting";
+    $accounting_path = "." if not -e $accounting_path;
 
-my @accounting_files = get_accounting_files( $accounting_path, $start_date, $end_date );
+    my @accounting_files = get_accounting_files( $accounting_path, $start_date, $end_date );
 
-for my $file ( @accounting_files ) {
-    my $accounting_file = $accounting_path . "/" . $file;
-    process_data( $accounting_file, $table, $dbh, $verbose );
+    for my $file ( @accounting_files ) {
+        my $accounting_file = $accounting_path . "/" . $file;
+        process_data( $accounting_file, $table, $dbh, $verbose );
+    }
+
+    # clean up the DB like a good boy
+    $dbh->disconnect();
 }
-
-# clean up the DB like a good boy
-$dbh->disconnect();
-
+run() unless caller();
 
 =item check_options( $start_date, $end_date )
 
