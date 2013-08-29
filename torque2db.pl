@@ -103,6 +103,8 @@ my $table = 'jobs';
 my $dbh = init_database( $table );
 
 my $accounting_path = "/var/spool/torque/server_priv/accounting";
+$accounting_path = "." if not -e $accounting_path;
+
 my @accounting_files = get_accounting_files( $accounting_path, $start_date, $end_date );
 
 for my $file ( @accounting_files ) {
