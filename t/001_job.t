@@ -3,12 +3,15 @@
 use warnings;
 use strict;
 
-use Test::More;
+use Test::More tests => 2;
 
 BEGIN {
-    plan tests => 1,
+    use_ok( 'Job' );
 }
 
-use_ok( 'Job' );
+{
+    my $job = Job->new();
+    isa_ok( $job, 'Job' );
+}
 
 # vim: expandtab shiftwidth=4
