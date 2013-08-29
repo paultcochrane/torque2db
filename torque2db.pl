@@ -80,6 +80,8 @@ it under the same terms as Perl itself.
 
 =cut
 
+package torque2db;
+
 use warnings;
 use strict;
 use Getopt::Long;

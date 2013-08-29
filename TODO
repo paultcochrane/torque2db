@@ -1,5 +1,4 @@
 Ideas for improvement from @gensym:
- - pack das Skript in das package 'torque2db'
  - keine globalen Variablen im Skript
  - und jeglichen 'globalen' Code in eine sub ( z.B. sub run { ... } )
    packen, und ein 'run() unless caller();' als einzigen 'globalen' Code
