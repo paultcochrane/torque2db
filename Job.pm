@@ -57,11 +57,7 @@ Get/set the username of the user who ran the job.
 
 =cut
 
-sub username {
-    my $self = shift;
-    if (@_) { $self->{'username'} = shift }
-    return $self->{'username'};
-}
+has username => ( is => 'rw' );
 
 =item groupname()
 
