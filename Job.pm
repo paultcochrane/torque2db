@@ -2,6 +2,8 @@ package Job;
 use strict;
 use warnings;
 
+use Moo;
+
 =head1 NAME
 
 Job.pm - handle Torque C<Job> objects
@@ -39,9 +41,6 @@ sub new {
 
 =cut
 
-# methods to access data
-# with arguments they set the value, without them they retrieve the value
-
 =over 4
 
 =item jobid()
@@ -50,11 +49,7 @@ Get/set the Torque job id (only the numerical part).
 
 =cut
 
-sub jobid {
-    my $self = shift;
-    if (@_) { $self->{'jobid'} = shift }
-    return $self->{'jobid'};
-}
+has jobid => ( is => 'rw' );
 
 =item username()
 
