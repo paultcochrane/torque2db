@@ -1,6 +1,4 @@
 Ideas for improvement from @gensym:
- - Parameter in Funktionen/Methoden nicht mit 'shift' runterholen, sondern
-   mit 'my ( $start_date, $end_date) = @_;' binden...
  - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser
    sprintf oder noch besser https://metacpan.org/module/DBIx::Interp nehmen
  - $self->{'jobid'} hier quoted man den key nicht: $self->{jobid}

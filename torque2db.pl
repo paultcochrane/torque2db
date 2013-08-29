@@ -127,8 +127,7 @@ Check the input options
 =cut
 
 sub check_options {
-    my $start_date = shift;
-    my $end_date = shift;
+    my ( $start_date, $end_date ) = @_;
 
     # if start or end dates are given, make sure that they are in the correct
     # format
@@ -153,7 +152,7 @@ handle.
 =cut
 
 sub init_database {
-    my $table = shift;
+    my ( $table ) = @_;
 
     my $dbfile = 'torque.db';      # the database file
     my $dbh = DBI->connect(        # connect to the database, create if needed
@@ -199,9 +198,7 @@ Return all relevant accounting data files at the given path
 =cut
 
 sub get_accounting_files {
-    my $accounting_path = shift;
-    my $start_date = shift;
-    my $end_date = shift;
+    my ( $accounting_path, $start_date, $end_date ) = @_;
 
     # get a list of files to process
     opendir my $dirh, $accounting_path or
@@ -231,10 +228,7 @@ requested.
 =cut
 
 sub process_data {
-    my $accounting_file = shift;
-    my $table = shift;
-    my $dbh = shift;
-    my $verbose = shift;
+    my ( $accounting_file, $table, $dbh, $verbose ) = @_;
 
     my $day = (split "\/", $accounting_file)[-1];
     print "Processing data for $day; ";
