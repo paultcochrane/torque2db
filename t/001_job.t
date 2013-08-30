@@ -259,6 +259,13 @@ BEGIN {
     is( $job->waittime, 3, "Got correct wait time" );
 }
 
-done_testing( 61 );
+{
+    my $job = Job->new();
+    $job->start_time( 253 );
+    $job->completion_time( 8673 );
+    is( $job->walltime, 8673-253, "Got correct walltime" );
+}
+
+done_testing( 62 );
 
 # vim: expandtab shiftwidth=4
