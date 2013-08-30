@@ -153,8 +153,12 @@ BEGIN {
     $job->allocated_tasks( "" );
     is( $job->allocated_tasks, 1,
         "Allocated tasks returns 1 with empty string" );
+
+    $job->allocated_tasks( "nodes=1:ppn=1" );
+    is( $job->allocated_tasks, 1,
+        "Allocated tasks returns 1 with nodes=1:ppn=1" );
 }
 
-done_testing( 38 );
+done_testing( 39 );
 
 # vim: expandtab shiftwidth=4
