@@ -6,10 +6,18 @@ Required packages
 -----------------
 
 Debian:
-    sudo aptitude install libdbi-perl libclass-dbi-sqlite-perl sqlite3
+    sudo aptitude install \
+	libdbi-perl\
+	libclass-dbi-sqlite-perl\
+	libmoose-perl\
+	sqlite3
 
 Red Hat:
-    sudo yum install perl-DBI perl-Class-DBI-SQLite sqlite
+    sudo yum install\
+	perl-DBI\
+	perl-Class-DBI-SQLite\
+	perl-Moose\
+	sqlite
 
 Usage
 -----
