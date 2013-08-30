@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 9;
+use Test::More tests => 11;
 
 BEGIN {
     use_ok( 'Job' );
@@ -35,6 +35,13 @@ BEGIN {
     is( $job->groupname, undef, "Groupname is undef after new" );
     $job->groupname( "zzzz" );
     is( $job->groupname, "zzzz", "Groupname set correctly" );
+}
+
+{
+    my $job = Job->new();
+    is( $job->queue, undef, "Queue name is undef after new" );
+    $job->queue( "all" );
+    is( $job->queue, "all", "Queue name set correctly" );
 }
 
 # vim: expandtab shiftwidth=4
