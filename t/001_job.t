@@ -192,8 +192,12 @@ BEGIN {
     $job->required_ncpus( 20 );
     is( $job->required_ncpus, 20,
         "Returned corrected required ncpus value");
+
+    eval { $job->required_ncpus( "blah" ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a string to required_ncpus should fail" );
 }
 
-done_testing( 48 );
+done_testing( 49 );
 
 # vim: expandtab shiftwidth=4
