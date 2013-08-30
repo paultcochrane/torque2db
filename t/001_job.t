@@ -207,6 +207,26 @@ BEGIN {
         "Correct used cputime" );
 }
 
-done_testing( 51 );
+{
+    my $job = Job->new();
+    is( $job->required_walltime, undef,
+        "Required walltime undef after new" );
+
+    $job->required_walltime( "15:27:39" );
+    is( $job->required_walltime, 15*3600 + 27*60 + 39,
+        "Correct required walltime" );
+}
+
+{
+    my $job = Job->new();
+    is( $job->used_walltime, undef,
+        "Used walltime undef after new" );
+
+    $job->used_walltime( "00:22:13" );
+    is( $job->used_walltime, 0*3600 + 22*60 + 13,
+        "Correct used walltime" );
+}
+
+done_testing( 55 );
 
 # vim: expandtab shiftwidth=4
