@@ -292,6 +292,47 @@ BEGIN {
         "Time string to seconds conversion" );
 }
 
-done_testing( 68 );
+{
+    my $job = Job->new();
+    my $job_data_string = 'user=bazza group=users jobname=cf queue=all ctime=1376909191 qtime=1376909192 etime=1376909192 start=1376909192 owner=bazza@moo.baa.de exec_host=smp-n010/27 Resource_List.mem=20gb Resource_List.neednodes=1:ppn=1 Resource_List.nodect=1 Resource_List.nodes=1:ppn=1 Resource_List.walltime=12:00:00 session=32266 end=1376909829 Exit_status=0 resources_used.cput=00:10:03 resources_used.mem=750268kb resources_used.vmem=955460kb resources_used.walltime=00:10:37';
+    $job->set_job_data( $job_data_string );
+    ok( exists $job->{job_data}, "Job data saved in object" );
+    is( $job->{job_data}{Exit_status}, 0,
+        "Exit status in job data" );
+    is( $job->{job_data}{'Resource_List.mem'}, '20gb',
+        "Requested mem in job data" );
+    is( $job->{job_data}{'Resource_List.nodes'}, '1:ppn=1',
+        "Requested nodes in job data" );
+    is( $job->{job_data}{'Resource_List.walltime'}, "12:00:00",
+        "Requested walltime in job data" );
+    is( $job->{job_data}{end}, 1376909829,
+        "End time in job data" );
+    is( $job->{job_data}{exec_host}, "smp-n010/27",
+        "Exec host list in job data" );
+    is( $job->{job_data}{group}, 'users',
+        "Group name in job data" );
+    is( $job->{job_data}{jobname}, 'cf',
+        "Job name in job data" );
+    is( $job->{job_data}{owner}, 'bazza@moo.baa.de',
+        "User email address in job data" );
+    is( $job->{job_data}{qtime}, 1376909192,
+        "Queue time in job data" );
+    is( $job->{job_data}{queue}, 'all',
+        "Queue name in job data" );
+    is( $job->{job_data}{'resources_used.cput'}, '00:10:03',
+        "Used cpu time in job data" );
+    is( $job->{job_data}{'resources_used.mem'}, '750268kb',
+        "Used memory in job data" );
+    is( $job->{job_data}{'resources_used.vmem'}, '955460kb',
+        "Used virtual memory in job data" );
+    is( $job->{job_data}{'resources_used.walltime'}, "00:10:37",
+        "Used walltime in job data" );
+    is( $job->{job_data}{start}, 1376909192,
+        "Start time in job data" );
+    is( $job->{job_data}{user}, "bazza",
+        "User name in job data" );
+}
+
+done_testing( 86 );
 
 # vim: expandtab shiftwidth=4
