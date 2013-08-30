@@ -198,6 +198,15 @@ BEGIN {
         "Setting a string to required_ncpus should fail" );
 }
 
-done_testing( 49 );
+{
+    my $job = Job->new();
+    is( $job->used_cputime, undef, "Used cputime undef after new" );
+
+    $job->used_cputime( "10:20:30" );
+    is( $job->used_cputime, 10*3600 + 20*60 + 30,
+        "Correct used cputime" );
+}
+
+done_testing( 51 );
 
 # vim: expandtab shiftwidth=4
