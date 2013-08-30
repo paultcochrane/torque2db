@@ -213,11 +213,7 @@ Get/set the requested number of CPUs if this value had been set in the job.
 
 =cut
 
-sub required_ncpus {
-    my $self = shift;
-    if (@_) { $self->{'required_ncpus'} = shift }
-    return $self->{'required_ncpus'};
-}
+has required_ncpus => ( is => 'rw', isa => 'Int' );
 
 =item used_cputime()
 
