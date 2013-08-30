@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 11;
+use Test::More tests => 13;
 
 BEGIN {
     use_ok( 'Job' );
@@ -42,6 +42,13 @@ BEGIN {
     is( $job->queue, undef, "Queue name is undef after new" );
     $job->queue( "all" );
     is( $job->queue, "all", "Queue name set correctly" );
+}
+
+{
+    my $job = Job->new();
+    is( $job->queue_time, undef, "Queue time is undef after new" );
+    $job->queue_time( 8768768 );
+    is( $job->queue_time, 8768768, "Queue time set correctly" );
 }
 
 # vim: expandtab shiftwidth=4
