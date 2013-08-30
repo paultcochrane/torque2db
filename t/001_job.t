@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 24;
+use Test::More;
 
 BEGIN {
     use_ok( 'Job' );
@@ -94,5 +94,8 @@ BEGIN {
     like( $@, qr/Validation failed for 'Int'/,
         "Setting a float to a completion time should fail" );
 }
+
+
+done_testing( 26 );
 
 # vim: expandtab shiftwidth=4
