@@ -171,6 +171,20 @@ BEGIN {
         "Allocated tasks correct when nodes=tane-n001:ppn=6" );
 }
 
-done_testing( 42 );
+{
+    my $job = Job->new();
+    is( $job->slots, 1, "Slots value returns 1 after new" );
+
+    $job->allocated_tasks( "nodes=1:ppn=1" );
+    is( $job->slots, 1, "Slots value correct for nodes=1:ppn=1" );
+
+    $job->allocated_tasks( "nodes=2:ppn=6" );
+    is( $job->slots, 12, "Slots value correct when nodes=2:ppn=6" );
+
+    $job->allocated_tasks( "nodes=tane-n001:ppn=6" );
+    is( $job->slots, 6, "Slots value correct when nodes=tane-n001:ppn=6" );
+}
+
+done_testing( 46 );
 
 # vim: expandtab shiftwidth=4
