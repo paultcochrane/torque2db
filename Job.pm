@@ -165,6 +165,9 @@ sub allocated_tasks {
     my $self = shift;
     if (@_) {
 	my $nodes_string = shift;
+
+        return 1 if $nodes_string eq "";
+
         my ($num_nodes, $ppn) = split(/:/, $nodes_string);
 
         my $num_processes_per_node = (split(/=/, $ppn))[1] if $ppn;

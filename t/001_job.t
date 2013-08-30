@@ -149,8 +149,12 @@ BEGIN {
 {
     my $job = Job->new();
     is( $job->allocated_tasks, 1, "Allocated tasks value returns 1 after new" );
+
+    $job->allocated_tasks( "" );
+    is( $job->allocated_tasks, 1,
+        "Allocated tasks returns 1 with empty string" );
 }
 
-done_testing( 37 );
+done_testing( 38 );
 
 # vim: expandtab shiftwidth=4
