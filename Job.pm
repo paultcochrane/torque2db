@@ -271,11 +271,7 @@ Get/set the exit status of the job as reported by Torque.
 
 =cut
 
-sub exit_status {
-    my $self = shift;
-    if (@_) { $self->{'exit_status'} = shift }
-    return $self->{'exit_status'};
-}
+has exit_status => ( is => 'rw', isa => 'Int' );
 
 =item waittime()
 
