@@ -24,7 +24,7 @@ sub new {
     $self->{'required_memory'}         = undef;
     $self->{'used_memory'}             = undef;
     $self->{'used_virtual_memory'}     = undef;
-    $self->{'allocated_tasks'}         = undef;
+    $self->{'allocated_tasks'}         = 1;
     $self->{'required_ncpus'}          = undef;
     $self->{'used_cputime'}            = undef;
     $self->{'required_walltime'}       = undef;

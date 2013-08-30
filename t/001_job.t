@@ -146,6 +146,11 @@ BEGIN {
         "Gigabyte used virtual memory correctly set" );
 }
 
-done_testing( 36 );
+{
+    my $job = Job->new();
+    is( $job->allocated_tasks, 1, "Allocated tasks value returns 1 after new" );
+}
+
+done_testing( 37 );
 
 # vim: expandtab shiftwidth=4
