@@ -1,7 +1,6 @@
 Ideas for improvement from @gensym:
  - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser
    sprintf oder noch besser https://metacpan.org/module/DBIx::Interp nehmen
- - $self->{'jobid'} hier quoted man den key nicht: $self->{jobid}
  - im Modul der Konstruktor: $self->{$_} = undef for qw( jobid username
    groupname queue queue_time start_time completion_time required_memory
    used_memory used_virtual_memory allocated_tasks required_ncpus used_cputime

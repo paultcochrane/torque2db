@@ -14,23 +14,23 @@ Job.pm - handle Torque C<Job> objects
 sub new {
     my $class = shift;
     my $self = {};
-    $self->{'jobid'}                   = undef;
-    $self->{'username'}                = undef;
-    $self->{'groupname'}               = undef;
-    $self->{'queue'}                   = undef;
-    $self->{'queue_time'}              = undef;
-    $self->{'start_time'}              = undef;
-    $self->{'completion_time'}         = undef;
-    $self->{'required_memory'}         = undef;
-    $self->{'used_memory'}             = undef;
-    $self->{'used_virtual_memory'}     = undef;
-    $self->{'allocated_tasks'}         = 1;
-    $self->{'required_ncpus'}          = undef;
-    $self->{'used_cputime'}            = undef;
-    $self->{'required_walltime'}       = undef;
-    $self->{'used_walltime'}           = undef;
-    $self->{'allocated_hostlist'}      = undef;
-    $self->{'exit_status'}             = undef;
+    $self->{jobid}                   = undef;
+    $self->{username}                = undef;
+    $self->{groupname}               = undef;
+    $self->{queue}                   = undef;
+    $self->{queue_time}              = undef;
+    $self->{start_time}              = undef;
+    $self->{completion_time}         = undef;
+    $self->{required_memory}         = undef;
+    $self->{used_memory}             = undef;
+    $self->{used_virtual_memory}     = undef;
+    $self->{allocated_tasks}         = 1;
+    $self->{required_ncpus}          = undef;
+    $self->{used_cputime}            = undef;
+    $self->{required_walltime}       = undef;
+    $self->{used_walltime}           = undef;
+    $self->{allocated_hostlist}      = undef;
+    $self->{exit_status}             = undef;
     bless($self, $class);
     return $self;
 }
@@ -67,8 +67,8 @@ Get/set the unix group of the user who ran the job.
 
 sub groupname {
     my $self = shift;
-    if (@_) { $self->{'groupname'} = shift }
-    return $self->{'groupname'};
+    if (@_) { $self->{groupname} = shift }
+    return $self->{groupname};
 }
 
 =item queue()
@@ -79,8 +79,8 @@ Get/set the queue name where the job ran.
 
 sub queue {
     my $self = shift;
-    if (@_) { $self->{'queue'} = shift }
-    return $self->{'queue'};
+    if (@_) { $self->{queue} = shift }
+    return $self->{queue};
 }
 
 =item queue_time()
@@ -118,9 +118,9 @@ sub required_memory {
     if (@_) {
 	my $memory_string = shift;
 	my $required_memory = $self->mem_string_to_kb($memory_string);
-	$self->{'required_memory'} = $required_memory;
+	$self->{required_memory} = $required_memory;
     }
-    return $self->{'required_memory'};
+    return $self->{required_memory};
 }
 
 =item used_memory()
@@ -134,9 +134,9 @@ sub used_memory {
     if (@_) {
 	my $memory_string = shift;
 	my $used_memory = $self->mem_string_to_kb($memory_string);
-	$self->{'used_memory'} = $used_memory;
+	$self->{used_memory} = $used_memory;
     }
-    return $self->{'used_memory'};
+    return $self->{used_memory};
 }
 
 =item used_virtual_memory()
@@ -150,9 +150,9 @@ sub used_virtual_memory {
     if (@_) {
 	my $memory_string = shift;
 	my $used_virtual_memory = $self->mem_string_to_kb($memory_string);
-	$self->{'used_virtual_memory'} = $used_virtual_memory;
+	$self->{used_virtual_memory} = $used_virtual_memory;
     }
-    return $self->{'used_virtual_memory'};
+    return $self->{used_virtual_memory};
 }
 
 =item allocated_tasks()
@@ -178,15 +178,15 @@ sub allocated_tasks {
 	unless ( $num_nodes =~ m/^\d+$/ ) {
 	    $num_nodes = 1;
 	}
-	$self->{'allocated_tasks'} = $num_nodes*$num_processes_per_node;
-	return $self->{'allocated_tasks'};
+	$self->{allocated_tasks} = $num_nodes*$num_processes_per_node;
+	return $self->{allocated_tasks};
     }
     else {
-	if ( $self->{'allocated_tasks'} ) {
-	    return $self->{'allocated_tasks'};
+	if ( $self->{allocated_tasks} ) {
+	    return $self->{allocated_tasks};
 	}
-	elsif ( $self->{'required_ncpus'} ) {
-	    return $self->{'required_ncpus'};
+	elsif ( $self->{required_ncpus} ) {
+	    return $self->{required_ncpus};
 	}
 	else {
 	    return 1;
@@ -223,8 +223,8 @@ Get/set the amount of cputime used by the job.
 
 sub used_cputime {
     my $self = shift;
-    if (@_) { $self->{'used_cputime'} = $self->time_string_to_seconds(shift) }
-    return $self->{'used_cputime'};
+    if (@_) { $self->{used_cputime} = $self->time_string_to_seconds(shift) }
+    return $self->{used_cputime};
 }
 
 =item required_walltime()
@@ -235,8 +235,8 @@ Get/set the amount of walltime requested by the job.
 
 sub required_walltime {
     my $self = shift;
-    if (@_) { $self->{'required_walltime'} = $self->time_string_to_seconds(shift) }
-    return $self->{'required_walltime'};
+    if (@_) { $self->{required_walltime} = $self->time_string_to_seconds(shift) }
+    return $self->{required_walltime};
 }
 
 =item used_walltime()
@@ -250,8 +250,8 @@ See L<walltime()>.
 
 sub used_walltime {
     my $self = shift;
-    if (@_) { $self->{'used_walltime'} = $self->time_string_to_seconds(shift) }
-    return $self->{'used_walltime'};
+    if (@_) { $self->{used_walltime} = $self->time_string_to_seconds(shift) }
+    return $self->{used_walltime};
 }
 
 =item allocated_hostlist()
@@ -423,7 +423,7 @@ sub set_job_data {
 
 	$job_data{$key} = $value;
     }
-    $self->{'job_data'} = \%job_data;
+    $self->{job_data} = \%job_data;
 }
 
 =item get_job_info_from_key()
@@ -436,7 +436,7 @@ sub get_job_info_from_key {
     my $self = shift;
     my $key = shift;
 
-    my $data = ${$self->{'job_data'}}{$key};
+    my $data = ${$self->{job_data}}{$key};
     return defined $data ? $data : undef;
 }
 
