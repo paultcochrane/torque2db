@@ -105,11 +105,7 @@ Get/set when the job completed (in seconds since the epoch).
 
 =cut
 
-sub completion_time {
-    my $self = shift;
-    if (@_) { $self->{'completion_time'} = shift }
-    return $self->{'completion_time'};
-}
+has completion_time => ( is => 'rw', isa => 'Int' );
 
 =item required_memory()
 

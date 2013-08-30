@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 20;
+use Test::More tests => 24;
 
 BEGIN {
     use_ok( 'Job' );
@@ -78,6 +78,21 @@ BEGIN {
     eval { $job->start_time( 0.145 ) };
     like( $@, qr/Validation failed for 'Int'/,
         "Setting a float to a start time should fail" );
+}
+
+{
+    my $job = Job->new();
+    is( $job->completion_time, undef, "Completion time is undef after new" );
+    $job->completion_time( 976876 );
+    is( $job->completion_time, 976876, "Completion time set correctly" );
+
+    eval { $job->completion_time( "blah" ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a string to a completion time should fail" );
+
+    eval { $job->completion_time( 0.145 ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a float to a completion time should fail" );
 }
 
 # vim: expandtab shiftwidth=4
