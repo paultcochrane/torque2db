@@ -4,6 +4,7 @@ use warnings;
 use strict;
 
 use Test::More;
+use IO::Capture::Stderr;
 
 BEGIN {
     use_ok( 'Job' );
@@ -266,6 +267,24 @@ BEGIN {
     is( $job->walltime, 8673-253, "Got correct walltime" );
 }
 
-done_testing( 62 );
+{
+    my $job = Job->new();
+    $job->jobid( 1234 );
+    is( $job->mem_string_to_kb( "153kb" ), 153,
+        "Kilobyte mem string correctly converted" );
+    is( $job->mem_string_to_kb( "459mb" ), 459*1024,
+        "Megabyte mem string correctly converted" );
+    is( $job->mem_string_to_kb( "16gb" ), 16*1024*1024,
+        "Gigabyte mem string correctly converted" );
+    is( $job->mem_string_to_kb( "516b" ), 516,
+        "B mem string correctly converted" );
+    my $capture = IO::Capture::Stderr->new();
+    $capture->start();
+    is( $job->mem_string_to_kb( "324m" ), 324*1024,
+        "Correct memory value when magnitude string unknown");
+    $capture->stop();
+}
+
+done_testing( 67 );
 
 # vim: expandtab shiftwidth=4
