@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 17;
+use Test::More tests => 20;
 
 BEGIN {
     use_ok( 'Job' );
@@ -19,9 +19,14 @@ BEGIN {
     is( $job->jobid, undef, "Job ID is undef after new" );
     $job->jobid(01234);
     is( $job->jobid, 01234, "Job ID set correctly" );
+
     eval { $job->jobid("moo") };
     like( $@, qr/Validation failed for 'Int'/,
         "Setting a string to a job ID should fail" );
+
+    eval { $job->jobid( 37.2452 ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a float to a job ID should fail" );
 }
 
 {
@@ -50,9 +55,14 @@ BEGIN {
     is( $job->queue_time, undef, "Queue time is undef after new" );
     $job->queue_time( 8768768 );
     is( $job->queue_time, 8768768, "Queue time set correctly" );
+
     eval { $job->queue_time("moo") };
     like( $@, qr/Validation failed for 'Int'/,
         "Setting a string to a queue time should fail" );
+
+    eval { $job->queue_time( 1.466 ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a float to a queue time should fail" );
 }
 
 {
@@ -60,9 +70,14 @@ BEGIN {
     is( $job->start_time, undef, "Start time is undef after new" );
     $job->start_time( 976876 );
     is( $job->start_time, 976876, "Start time set correctly" );
+
     eval { $job->start_time("blah") };
     like( $@, qr/Validation failed for 'Int'/,
         "Setting a string to a start time should fail" );
+
+    eval { $job->start_time( 0.145 ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a float to a start time should fail" );
 }
 
 # vim: expandtab shiftwidth=4
