@@ -13,24 +13,12 @@ Job.pm - handle Torque C<Job> objects
 # the object constructor
 sub new {
     my $class = shift;
-    my $self = {};
-    $self->{jobid}                   = undef;
-    $self->{username}                = undef;
-    $self->{groupname}               = undef;
-    $self->{queue}                   = undef;
-    $self->{queue_time}              = undef;
-    $self->{start_time}              = undef;
-    $self->{completion_time}         = undef;
-    $self->{required_memory}         = undef;
-    $self->{used_memory}             = undef;
-    $self->{used_virtual_memory}     = undef;
-    $self->{allocated_tasks}         = 1;
-    $self->{required_ncpus}          = undef;
-    $self->{used_cputime}            = undef;
-    $self->{required_walltime}       = undef;
-    $self->{used_walltime}           = undef;
-    $self->{allocated_hostlist}      = undef;
-    $self->{exit_status}             = undef;
+    my $self;
+    $self->{$_} = undef for qw(
+        jobid username groupname queue queue_time start_time
+        completion_time required_memory used_memory used_virtual_memory
+        allocated_tasks required_ncpus used_cputime required_walltime
+        used_walltime allocated_hostlist exit_status );
     bless($self, $class);
     return $self;
 }

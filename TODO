@@ -1,8 +1,4 @@
 Ideas for improvement from @gensym:
  - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser
    sprintf oder noch besser https://metacpan.org/module/DBIx::Interp nehmen
- - im Modul der Konstruktor: $self->{$_} = undef for qw( jobid username
-   groupname queue queue_time start_time completion_time required_memory
-   used_memory used_virtual_memory allocated_tasks required_ncpus used_cputime
-   required_walltime used_walltime allocated_hostlist exit_status );
  - Getter/Setter mit Moo (https://metacpan.org/module/Moo) vereinfachen
