@@ -2,7 +2,7 @@ package Job;
 use strict;
 use warnings;
 
-use Moo;
+use Moose;
 
 =head1 NAME
 
