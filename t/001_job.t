@@ -112,6 +112,23 @@ BEGIN {
         "Gigabyte required memory correctly set" );
 }
 
-done_testing( 28 );
+{
+    my $job = Job->new();
+    is( $job->used_memory, undef, "Used memory is undef after new" );
+
+    $job->used_memory( "1245kb" );
+    is( $job->used_memory, 1245,
+        "Megabyte used memory correctly set" );
+
+    $job->used_memory( "105mb" );
+    is( $job->used_memory, 105*1024,
+        "Megabyte used memory correctly set" );
+
+    $job->used_memory( "3gb" );
+    is( $job->used_memory, 3*1024*1024,
+        "Gigabyte used memory correctly set" );
+}
+
+done_testing( 32 );
 
 # vim: expandtab shiftwidth=4
