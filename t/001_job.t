@@ -95,7 +95,23 @@ BEGIN {
         "Setting a float to a completion time should fail" );
 }
 
+{
+    my $job = Job->new();
+    is( $job->required_memory, undef, "Required memory is undef after new" );
 
-done_testing( 26 );
+    $job->required_memory( "1245kb" );
+    is( $job->required_memory, 1245,
+        "Megabyte required memory correctly set" );
+
+    $job->required_memory( "105mb" );
+    is( $job->required_memory, 105*1024,
+        "Megabyte required memory correctly set" );
+
+    $job->required_memory( "3gb" );
+    is( $job->required_memory, 3*1024*1024,
+        "Gigabyte required memory correctly set" );
+}
+
+done_testing( 28 );
 
 # vim: expandtab shiftwidth=4
