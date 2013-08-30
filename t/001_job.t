@@ -227,6 +227,17 @@ BEGIN {
         "Correct used walltime" );
 }
 
-done_testing( 55 );
+{
+    my $job = Job->new();
+    is( $job->allocated_hostlist, undef,
+        "Allocated hostlist undef after new" );
+
+    my $hostlist = "tane-n001/2";
+    $job->allocated_hostlist( $hostlist );
+    is( $job->allocated_hostlist, $hostlist,
+        "Correct hostlist returned fro allocated_hostlist" );
+}
+
+done_testing( 57 );
 
 # vim: expandtab shiftwidth=4
