@@ -161,8 +161,12 @@ BEGIN {
     $job->allocated_tasks( "nodes=1:ppn=4" );
     is( $job->allocated_tasks, 4,
         "Allocated tasks correct when nodes=1:ppn=4" );
+
+    $job->allocated_tasks( "nodes=2:ppn=6" );
+    is( $job->allocated_tasks, 12,
+        "Allocated tasks correct when nodes=2:ppn=6" );
 }
 
-done_testing( 40 );
+done_testing( 41 );
 
 # vim: expandtab shiftwidth=4

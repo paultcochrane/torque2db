@@ -169,11 +169,12 @@ sub allocated_tasks {
         return 1 if $nodes_string eq "";
 
         my ($num_nodes, $ppn) = split(/:/, $nodes_string);
+        $num_nodes = (split(/=/, $num_nodes))[1];
 
         my $num_processes_per_node = (split(/=/, $ppn))[1] if $ppn;
 
 	# if we have a name, then we only have one node (hopefully...)
-	if ( $num_nodes =~ m/\w+/ ) {
+	unless ( $num_nodes =~ m/\d+/ ) {
 	    $num_nodes = 1;
 	}
 	$self->{'allocated_tasks'} = $num_nodes*$num_processes_per_node;
