@@ -53,11 +53,7 @@ Get/set the unix group of the user who ran the job.
 
 =cut
 
-sub groupname {
-    my $self = shift;
-    if (@_) { $self->{groupname} = shift }
-    return $self->{groupname};
-}
+has groupname => ( is => 'rw', isa => 'Str' );
 
 =item queue()
 
