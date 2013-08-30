@@ -89,11 +89,7 @@ Get/set when the job was queued (in seconds since the epoch).
 
 =cut
 
-sub queue_time {
-    my $self = shift;
-    if (@_) { $self->{'queue_time'} = shift }
-    return $self->{'queue_time'};
-}
+has queue_time => ( is => 'rw', isa => 'Int' );
 
 =item start_time()
 
