@@ -61,11 +61,7 @@ Get/set the queue name where the job ran.
 
 =cut
 
-sub queue {
-    my $self = shift;
-    if (@_) { $self->{queue} = shift }
-    return $self->{queue};
-}
+has queue => ( is => 'rw', isa => 'Str' );
 
 =item queue_time()
 
