@@ -246,8 +246,19 @@ BEGIN {
     $job->exit_status( 25 );
     is( $job->exit_status, 25,
         "Correct value returned for exit_status" );
+
+    eval { $job->exit_status( "baa" ) };
+    like( $@, qr/Validation failed for 'Int'/,
+        "Setting a string to an exit status should fail" );
 }
 
-done_testing( 59 );
+{
+    my $job = Job->new();
+    $job->start_time( 20 );
+    $job->queue_time( 17 );
+    is( $job->waittime, 3, "Got correct wait time" );
+}
+
+done_testing( 61 );
 
 # vim: expandtab shiftwidth=4
