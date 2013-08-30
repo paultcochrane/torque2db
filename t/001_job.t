@@ -165,8 +165,12 @@ BEGIN {
     $job->allocated_tasks( "nodes=2:ppn=6" );
     is( $job->allocated_tasks, 12,
         "Allocated tasks correct when nodes=2:ppn=6" );
+
+    $job->allocated_tasks( "nodes=tane-n001:ppn=6" );
+    is( $job->allocated_tasks, 6,
+        "Allocated tasks correct when nodes=tane-n001:ppn=6" );
 }
 
-done_testing( 41 );
+done_testing( 42 );
 
 # vim: expandtab shiftwidth=4
