@@ -185,6 +185,15 @@ BEGIN {
     is( $job->slots, 6, "Slots value correct when nodes=tane-n001:ppn=6" );
 }
 
-done_testing( 46 );
+{
+    my $job = Job->new();
+    is( $job->required_ncpus, undef, "Required ncpus undef after new" );
+
+    $job->required_ncpus( 20 );
+    is( $job->required_ncpus, 20,
+        "Returned corrected required ncpus value");
+}
+
+done_testing( 48 );
 
 # vim: expandtab shiftwidth=4
