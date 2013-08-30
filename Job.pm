@@ -49,7 +49,7 @@ Get/set the Torque job id (only the numerical part).
 
 =cut
 
-has jobid => ( is => 'rw' );
+has jobid => ( is => 'rw', isa => 'Int' );
 
 =item username()
 

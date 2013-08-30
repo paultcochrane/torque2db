@@ -3,7 +3,7 @@
 use warnings;
 use strict;
 
-use Test::More tests => 8;
+use Test::More tests => 9;
 
 BEGIN {
     use_ok( 'Job' );
@@ -19,6 +19,8 @@ BEGIN {
     is( $job->jobid, undef, "Job ID is undef after new" );
     $job->jobid(01234);
     is( $job->jobid, 01234, "Job ID set correctly" );
+    eval { $job->jobid("moo") };
+    like( $@, qr/Validation failed for 'Int'/, "Setting a string to a job ID should fail" );
 }
 
 {
