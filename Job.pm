@@ -260,11 +260,10 @@ Get/set the list of hosts allocated to execute the job.
 
 =cut
 
-sub allocated_hostlist {
-    my $self = shift;
-    if (@_) { $self->{'allocated_hostlist'} = shift }
-    return $self->{'allocated_hostlist'};
-}
+has allocated_hostlist => (
+    is => 'rw',
+    isa => 'Str',
+);
 
 =item exit_status()
 

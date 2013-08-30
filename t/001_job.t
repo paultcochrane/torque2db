@@ -235,7 +235,7 @@ BEGIN {
     my $hostlist = "tane-n001/2";
     $job->allocated_hostlist( $hostlist );
     is( $job->allocated_hostlist, $hostlist,
-        "Correct hostlist returned fro allocated_hostlist" );
+        "Correct hostlist returned for allocated_hostlist" );
 }
 
 done_testing( 57 );
