@@ -238,6 +238,16 @@ BEGIN {
         "Correct hostlist returned for allocated_hostlist" );
 }
 
-done_testing( 57 );
+{
+    my $job = Job->new();
+    is( $job->exit_status, undef,
+        "Exit status undef after new" );
+
+    $job->exit_status( 25 );
+    is( $job->exit_status, 25,
+        "Correct value returned for exit_status" );
+}
+
+done_testing( 59 );
 
 # vim: expandtab shiftwidth=4
