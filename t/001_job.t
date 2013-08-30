@@ -285,6 +285,13 @@ BEGIN {
     $capture->stop();
 }
 
-done_testing( 67 );
+{
+    my $job = Job->new();
+    is( $job->time_string_to_seconds( "12:34:56" ),
+        12*3600 + 34*60 + 56,
+        "Time string to seconds conversion" );
+}
+
+done_testing( 68 );
 
 # vim: expandtab shiftwidth=4
