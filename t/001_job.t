@@ -331,8 +331,16 @@ BEGIN {
         "Start time in job data" );
     is( $job->{job_data}{user}, "bazza",
         "User name in job data" );
+
+    
+    is( $job->get_job_info_from_key( 'username' ), undef,
+        "Undef from unknown key in job info" );
+    is( $job->get_job_info_from_key( 'user' ), "bazza",
+        "Username from key in job info" );
+    is( $job->get_job_info_from_key( 'start' ), 1376909192,
+        "Start time from key in job info" );
 }
 
-done_testing( 86 );
+done_testing( 89 );
 
 # vim: expandtab shiftwidth=4
