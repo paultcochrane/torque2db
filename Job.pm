@@ -97,11 +97,7 @@ Get/set when the job started (in seconds since the epoch).
 
 =cut
 
-sub start_time {
-    my $self = shift;
-    if (@_) { $self->{'start_time'} = shift }
-    return $self->{'start_time'};
-}
+has start_time => ( is => 'rw', isa => 'Int' );
 
 =item completion_time()
 
