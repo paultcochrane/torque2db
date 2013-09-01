@@ -341,6 +341,14 @@ BEGIN {
         "Start time from key in job info" );
 }
 
-done_testing( 89 );
+{
+    my $job = Job->new();
+    my $job_data_line = '08/19/2013 12:57:09;E;967627.batch.server.de;user=bazza group=users jobname=cf queue=all ctime=1376909191 qtime=1376909192 etime=1376909192 start=1376909192 owner=bazza@moo.baa.de exec_host=smp-n010/27 Resource_List.mem=20gb Resource_List.neednodes=1:ppn=1 Resource_List.nodect=1 Resource_List.nodes=1:ppn=1 Resource_List.walltime=12:00:00 session=32266 end=1376909829 Exit_status=0 resources_used.cput=00:10:03 resources_used.mem=750268kb resources_used.vmem=955460kb resources_used.walltime=00:10:37';
+    $job->set_data( $job_data_line );
+
+    is( $job->username, "bazza", "Username from job data line" );
+}
+
+done_testing( 90 );
 
 # vim: expandtab shiftwidth=4
