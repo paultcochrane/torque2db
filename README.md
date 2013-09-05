@@ -10,6 +10,7 @@ Debian:
 	libdbi-perl\
 	libclass-dbi-sqlite-perl\
 	libmoose-perl\
+	libio-capture-perl\
 	sqlite3
 
 Red Hat:
@@ -17,6 +18,7 @@ Red Hat:
 	perl-DBI\
 	perl-Class-DBI-SQLite\
 	perl-Moose\
+	perl-IO-Capture\
 	sqlite
 
 Usage
