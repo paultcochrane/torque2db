@@ -155,19 +155,19 @@ BEGIN {
     is( $job->allocated_tasks, 1,
         "Allocated tasks returns 1 with empty string" );
 
-    $job->allocated_tasks( "nodes=1:ppn=1" );
+    $job->allocated_tasks( "1:ppn=1" );
     is( $job->allocated_tasks, 1,
         "Allocated tasks correct when nodes=1:ppn=1" );
 
-    $job->allocated_tasks( "nodes=1:ppn=4" );
+    $job->allocated_tasks( "1:ppn=4" );
     is( $job->allocated_tasks, 4,
         "Allocated tasks correct when nodes=1:ppn=4" );
 
-    $job->allocated_tasks( "nodes=2:ppn=6" );
+    $job->allocated_tasks( "2:ppn=6" );
     is( $job->allocated_tasks, 12,
         "Allocated tasks correct when nodes=2:ppn=6" );
 
-    $job->allocated_tasks( "nodes=tane-n001:ppn=6" );
+    $job->allocated_tasks( "tane-n001:ppn=6" );
     is( $job->allocated_tasks, 6,
         "Allocated tasks correct when nodes=tane-n001:ppn=6" );
 }
@@ -176,13 +176,13 @@ BEGIN {
     my $job = Job->new();
     is( $job->slots, 1, "Slots value returns 1 after new" );
 
-    $job->allocated_tasks( "nodes=1:ppn=1" );
+    $job->allocated_tasks( "1:ppn=1" );
     is( $job->slots, 1, "Slots value correct for nodes=1:ppn=1" );
 
-    $job->allocated_tasks( "nodes=2:ppn=6" );
+    $job->allocated_tasks( "2:ppn=6" );
     is( $job->slots, 12, "Slots value correct when nodes=2:ppn=6" );
 
-    $job->allocated_tasks( "nodes=tane-n001:ppn=6" );
+    $job->allocated_tasks( "tane-n001:ppn=6" );
     is( $job->slots, 6, "Slots value correct when nodes=tane-n001:ppn=6" );
 }
 
