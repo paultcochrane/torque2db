@@ -152,7 +152,6 @@ sub allocated_tasks {
         $num_nodes = (split(/=/, $num_nodes))[1];
 
         my $num_processes_per_node = (split(/=/, $ppn))[1] if $ppn;
-        print $num_processes_per_node, "\n";
 
 	# if we have a name, then we only have one node (hopefully...)
 	unless ( $num_nodes =~ m/^\d+$/ ) {
