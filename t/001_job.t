@@ -346,9 +346,23 @@ BEGIN {
     my $job_data_line = '08/19/2013 12:57:09;E;967627.batch.server.de;user=bazza group=users jobname=cf queue=all ctime=1376909191 qtime=1376909192 etime=1376909192 start=1376909192 owner=bazza@moo.baa.de exec_host=smp-n010/27 Resource_List.mem=20gb Resource_List.neednodes=1:ppn=1 Resource_List.nodect=1 Resource_List.nodes=1:ppn=1 Resource_List.walltime=12:00:00 session=32266 end=1376909829 Exit_status=0 resources_used.cput=00:10:03 resources_used.mem=750268kb resources_used.vmem=955460kb resources_used.walltime=00:10:37';
     $job->set_data( $job_data_line );
 
+    is( $job->jobid, 967627, "Job id from job data line" );
     is( $job->username, "bazza", "Username from job data line" );
+    is( $job->groupname, "users", "Group name from job data line" );
+    is( $job->queue, "all", "Queue name from job data line" );
+    is( $job->queue_time, 1376909192, "Queue time from job data line" );
+    is( $job->start_time, 1376909192, "Start time from job data line" );
+    is( $job->completion_time, 1376909829, "End time from job data line" );
+    is( $job->required_memory, 20*1024*1024, "Required memory from job data line" );
+    is( $job->used_memory, 750268, "Used memory from job data line" );
+    is( $job->used_virtual_memory, 955460, "Used virtual memory from job data line" );
+    is( $job->allocated_tasks, 1, "Allocated tasks from job data line" );
+    is( $job->required_walltime, 12*60*60, "Required walltime from job data line" );
+    is( $job->used_walltime, 637, "Required walltime from job data line" );
+    is( $job->allocated_hostlist, "smp-n010/27", "Allocated hostlist from job data line" );
+    is( $job->exit_status, 0, "Exit status from job data line" );
 }
 
-done_testing( 90 );
+done_testing( 104 );
 
 # vim: expandtab shiftwidth=4
