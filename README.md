@@ -5,11 +5,13 @@ Required packages
 -----------------
 
 Debian:
+
     sudo aptitude install \
 	libmoose-perl\
 	libio-capture-perl
 
 Red Hat:
+
     sudo yum install\
 	perl-Moose\
 	perl-IO-Capture
