@@ -55,6 +55,8 @@ EOF
     open my $latex_fh, ">", $latex_fname;
     print $latex_fh $stub_latex_text;
     close $latex_fh;
+
+    return 1;
 }
 
 main() unless caller();
