@@ -16,6 +16,12 @@ use IO::Capture::Stderr;
 	"main routine returns true" );
 }
 
-done_testing( 2 );
+{
+    my $expected = 1;
+    is( torque_statistics::read_options(), $expected,
+        "options are read without error" );
+}
+
+done_testing( 3 );
 
 # vim: expandtab shiftwidth=4

@@ -67,6 +67,10 @@ EOF
     return 1;
 }
 
+sub read_options {
+    return 1;
+}
+
 main() unless caller();
 
 =back
