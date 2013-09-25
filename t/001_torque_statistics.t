@@ -6,7 +6,7 @@ use strict;
 use Test::More;
 use IO::Capture::Stderr;
 
-BEGIN {
+{
     require_ok("torque_statistics.pl");
 }
 
