@@ -32,6 +32,14 @@ use warnings;
 use strict;
 use autodie;
 
+=over 4
+
+=item main()
+
+Runs the main code loop.
+
+=cut
+
 sub main {
     my $stub_latex_text = <<'EOF';
 \documentclass{scrartcl}
@@ -60,5 +68,9 @@ EOF
 }
 
 main() unless caller();
+
+=back
+
+=cut
 
 # vim: expandtab shiftwidth=4
