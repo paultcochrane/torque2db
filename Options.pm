@@ -10,7 +10,7 @@ Options.pm - process and contain options to torque_statistics.pl
 
 =cut
 
-has 'month_date' => (
+has 'month_year' => (
     is => 'rw',
     isa => 'Str',
 );
@@ -18,16 +18,16 @@ has 'month_date' => (
 sub month {
     my $self = shift;
 
-    my $month_date = $self->month_date();
-    my ( $month, $year ) = split '/', $month_date;
+    my $month_year = $self->month_year();
+    my ( $month, $year ) = split '/', $month_year;
     return int $month;
 }
 
 sub year {
     my $self = shift;
 
-    my $month_date = $self->month_date();
-    my ( $month, $year ) = split '/', $month_date;
+    my $month_year = $self->month_year();
+    my ( $month, $year ) = split '/', $month_year;
     return $year;
 }
 

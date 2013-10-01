@@ -17,16 +17,16 @@ BEGIN {
 
 {
     my $options = Options->new();
-    my $month_date_string = "08/2013";
-    $options->month_date( $month_date_string );
-    my $month_date = $options->month_date();
-    is( $month_date, $month_date_string,
-        "month_date() returns expected month/year string" );
+    my $month_year_string = "08/2013";
+    $options->month_year( $month_year_string );
+    my $month_year = $options->month_year();
+    is( $month_year, $month_year_string,
+        "month_year() returns expected month/year string" );
 }
 
 {
     my $options = Options->new();
-    $options->month_date( "08/2013" );
+    $options->month_year( "08/2013" );
     my $month = $options->month();
     my $expected_month = 8;
     is( $month, $expected_month,
@@ -35,7 +35,7 @@ BEGIN {
 
 {
     my $options = Options->new();
-    $options->month_date( "12/2014" );
+    $options->month_year( "12/2014" );
     my $month = $options->month();
     my $expected_month = 12;
     is( $month, $expected_month,
@@ -44,7 +44,7 @@ BEGIN {
 
 {
     my $options = Options->new();
-    $options->month_date( "01/2011" );
+    $options->month_year( "01/2011" );
     my $year = $options->year();
     my $expected_year = 2011;
     is( $year, $expected_year,
