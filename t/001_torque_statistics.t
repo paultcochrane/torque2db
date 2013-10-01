@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
-use warnings;
 use strict;
+use warnings FATAL => 'all';
 
 use Test::More;
 use IO::Capture::Stderr;

@@ -28,8 +28,8 @@ it under the same terms as Perl itself.
 
 package torque_statistics;
 
-use warnings;
 use strict;
+use warnings FATAL => 'all';
 use autodie;
 
 =over 4
