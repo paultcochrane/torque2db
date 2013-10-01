@@ -10,26 +10,15 @@ Options.pm - process and contain options to torque_statistics.pl
 
 =cut
 
-has 'month_year' => (
+has 'month' => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Int',
 );
 
-sub month {
-    my $self = shift;
-
-    my $month_year = $self->month_year();
-    my ( $month, $year ) = split '/', $month_year;
-    return int $month;
-}
-
-sub year {
-    my $self = shift;
-
-    my $month_year = $self->month_year();
-    my ( $month, $year ) = split '/', $month_year;
-    return $year;
-}
+has 'year' => (
+    is => 'rw',
+    isa => 'Int',
+);
 
 1;   # so the require or use succeeds
 

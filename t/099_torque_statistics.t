@@ -22,7 +22,7 @@ use IO::Capture::Stderr;
 }
 
 {
-    my $error = system "perl torque_statistics.pl --month=08/2013";
+    my $error = system "perl torque_statistics.pl --month=08";
     ok( $error == 0,
         "Program returns zero with --month option" );
 }
