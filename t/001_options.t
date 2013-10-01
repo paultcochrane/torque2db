@@ -42,6 +42,15 @@ BEGIN {
         "month() returns another expected value" );
 }
 
-done_testing( 5 );
+{
+    my $options = Options->new();
+    $options->month_date( "01/2011" );
+    my $year = $options->year();
+    my $expected_year = 2011;
+    is( $year, $expected_year,
+        "year() returns expected value" );
+}
+
+done_testing( 6 );
 
 # vim: expandtab shiftwidth=4

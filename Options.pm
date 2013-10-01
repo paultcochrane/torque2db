@@ -23,6 +23,14 @@ sub month {
     return int $month;
 }
 
+sub year {
+    my $self = shift;
+
+    my $month_date = $self->month_date();
+    my ( $month, $year ) = split '/', $month_date;
+    return $year;
+}
+
 1;   # so the require or use succeeds
 
 # vim: expandtab shiftwidth=4
