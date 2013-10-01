@@ -43,8 +43,10 @@ Runs the main code loop.
 
 sub main {
     my $month_date;
+    my $year_date;
     my $result = GetOptions(
                             "month=s" => \$month_date,
+                            "year=s"  => \$year_date,
                     );
     die "Options error" if not $result;
 

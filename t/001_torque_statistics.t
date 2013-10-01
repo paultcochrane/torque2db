@@ -27,6 +27,12 @@ use IO::Capture::Stderr;
         "Program returns zero with --month option" );
 }
 
-done_testing( 4 );
+{
+    my $error = system "perl torque_statistics.pl --year=2013";
+    ok( $error == 0,
+        "Program returns zero with --year option" );
+}
+
+done_testing( 5 );
 
 # vim: expandtab shiftwidth=4
