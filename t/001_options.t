@@ -24,6 +24,24 @@ BEGIN {
         "month_date() returns expected month/year string" );
 }
 
-done_testing( 3 );
+{
+    my $options = Options->new();
+    $options->month_date( "08/2013" );
+    my $month = $options->month();
+    my $expected_month = 8;
+    is( $month, $expected_month,
+        "month() returns expected value" );
+}
+
+{
+    my $options = Options->new();
+    $options->month_date( "12/2014" );
+    my $month = $options->month();
+    my $expected_month = 12;
+    is( $month, $expected_month,
+        "month() returns another expected value" );
+}
+
+done_testing( 5 );
 
 # vim: expandtab shiftwidth=4

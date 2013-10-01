@@ -15,6 +15,14 @@ has 'month_date' => (
     isa => 'Str',
 );
 
+sub month {
+    my $self = shift;
+
+    my $month_date = $self->month_date();
+    my ( $month, $year ) = split '/', $month_date;
+    return int $month;
+}
+
 1;   # so the require or use succeeds
 
 # vim: expandtab shiftwidth=4
