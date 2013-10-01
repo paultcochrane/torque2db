@@ -2,3 +2,18 @@ Ideas for improvement from @gensym:
  - unten baust Du dir einen 'insert_string' zusammen - hier kannst besser
    sprintf oder noch besser https://metacpan.org/module/DBIx::Interp nehmen
  - Getter/Setter mit Moo (https://metacpan.org/module/Moo) vereinfachen
+
+ - handle the following time periods as command line options
+   - start date
+   - end date
+   - previous month
+   - current month to date
+   - previous year
+   - current year to date
+ - determine the users and groups for the given period
+ - generate the following statistics for the given period
+   - number of users
+   - available computing power
+   - utilised computing power for all users
+   - utilised computing power for each user
+   - utilised computing power for each group
