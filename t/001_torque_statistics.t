@@ -18,8 +18,15 @@ use IO::Capture::Stderr;
         "Program returns zero without options" );
     ok( -f $output_tex_file,
         "TeX file created from program run" );
+    unlink $output_tex_file;
 }
 
-done_testing( 3 );
+{
+    my $error = system "perl torque_statistics.pl --month=08/2013";
+    ok( $error == 0,
+        "Program returns zero with --month option" );
+}
+
+done_testing( 4 );
 
 # vim: expandtab shiftwidth=4

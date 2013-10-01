@@ -31,6 +31,7 @@ package torque_statistics;
 use strict;
 use warnings FATAL => 'all';
 use autodie;
+use Getopt::Long;
 
 =over 4
 
@@ -41,6 +42,12 @@ Runs the main code loop.
 =cut
 
 sub main {
+    my $month_date;
+    my $result = GetOptions(
+                            "month=s" => \$month_date,
+                    );
+    die "Options error" if not $result;
+
     my $stub_latex_text = <<'EOF';
 \documentclass{scrartcl}
 
@@ -63,8 +70,6 @@ EOF
     open my $latex_fh, ">", $latex_fname;
     print $latex_fh $stub_latex_text;
     close $latex_fh;
-
-    return 1;
 }
 
 main() unless caller();
