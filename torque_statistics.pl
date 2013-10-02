@@ -47,7 +47,13 @@ Runs the main code loop.
 sub main {
     my $options = read_cmd_line_options();
 
-    my $date_text = $options->month() ? $options->month() : $options->year();
+    my $date_text;
+    if ( $options->month() ) {
+        $date_text = $options->month() . "/" . $options->year();
+    }
+    else {
+        $date_text = $options->year();
+    }
     my $stub_latex_text = <<"EOF";
 \\documentclass{scrartcl}
 
@@ -86,7 +92,7 @@ sub read_cmd_line_options {
 
     my $options = Options->new();
     $options->month( $month ) if $month;
-    $options->year( $year ) if $year;
+    $options->year( $year );
 
     return $options;
 }

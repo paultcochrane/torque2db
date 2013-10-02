@@ -59,7 +59,7 @@ use Test::More;
     open my $fh, "<", $output_tex_file;
     my @tex_file_text = <$fh>;
     close $fh;
-    my $expected_period_text = "For the period 08";
+    my $expected_period_text = "For the period 08/2013";
     my $got_text = join '', @tex_file_text;
     like( $got_text, qr/$expected_period_text/,
         "Expected reporting period text in TeX file" );
@@ -74,7 +74,7 @@ use Test::More;
     open my $fh, "<", $output_tex_file;
     my @tex_file_text = <$fh>;
     close $fh;
-    my $expected_period_text = "For the period 10";
+    my $expected_period_text = "For the period 10/2010";
     my $got_text = join '', @tex_file_text;
     like( $got_text, qr/$expected_period_text/,
         "Expected reporting period text in TeX file" );
