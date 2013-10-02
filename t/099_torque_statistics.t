@@ -2,6 +2,7 @@
 
 use strict;
 use warnings FATAL => 'all';
+use autodie;
 
 use Test::More;
 use IO::Capture::Stderr;
