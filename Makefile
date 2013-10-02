@@ -15,7 +15,11 @@ $(basename).tex:
 
 test:
 	cover -delete
-	perl -MDevel::Cover t/*.t
+	export PERL5OPT=-MDevel::Cover;\
+	for file in `ls -1 t/*.t`;\
+	do\
+	    perl $$file;\
+	done
 	cover
 
 clean:
