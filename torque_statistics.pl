@@ -47,7 +47,7 @@ Runs the main code loop.
 sub main {
     my $options = read_cmd_line_options();
 
-    my $date_text = 7; #$options->month();
+    my $date_text = "08"; #$options->month();
     my $stub_latex_text = <<"EOF";
 \\documentclass{scrartcl}
 
