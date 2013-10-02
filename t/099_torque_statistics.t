@@ -33,6 +33,12 @@ use IO::Capture::Stderr;
         "Program accepts --year option" );
 }
 
-done_testing( 5 );
+{
+    my $error = system "perl torque_statistics.pl --month=08 --year=2013";
+    ok( $error == 0,
+        "Program accepts --month and --year option" );
+}
+
+done_testing( 6 );
 
 # vim: expandtab shiftwidth=4
