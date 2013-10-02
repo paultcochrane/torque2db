@@ -5,6 +5,7 @@ use warnings FATAL => 'all';
 use autodie;
 
 use Test::More;
+use Capture::Tiny ':all';
 
 {
     require_ok("torque_statistics.pl");
@@ -18,14 +19,17 @@ use Test::More;
 
 {
     # print usage if no options are given
-    my $error_text = qx{ perl torque_statistics.pl };
+    my $cmd = "perl torque_statistics.pl";
+    my $stdout = capture_stdout { system $cmd };
     my $usage_text = "Usage:";
-    like( $error_text, qr/$usage_text/,
+    like( $stdout, qr/$usage_text/,
         "Usage text printed when program run without options" );
 }
 
 {
-    my $error = system "perl torque_statistics.pl --month=08";
+    my ($stdout, $stderr, $error) = capture {
+        system "perl torque_statistics.pl --month=08"
+    };
     ok( $error != 0,
         "Program requires --year with --month option" );
 }
