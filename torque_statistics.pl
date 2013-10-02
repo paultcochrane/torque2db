@@ -47,12 +47,12 @@ Runs the main code loop.
 sub main {
     my $options = read_cmd_line_options();
 
-    my $date_text;
+    my $time_period_text;
     if ( $options->month() ) {
-        $date_text = $options->month() . "/" . $options->year();
+        $time_period_text = sprintf "period %02d/%04d", $options->month(), $options->year();
     }
     else {
-        $date_text = $options->year();
+        $time_period_text = sprintf "year %04d", $options->year();
     }
     my $stub_latex_text = <<"EOF";
 \\documentclass{scrartcl}
@@ -60,7 +60,7 @@ sub main {
 \\begin{document}
 
 \\title{Title text}
-\\subtitle{For the period $date_text}
+\\subtitle{For the $time_period_text}
 \\author{}
 \\date{Date text}
 

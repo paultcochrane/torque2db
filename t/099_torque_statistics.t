@@ -81,6 +81,21 @@ use Test::More;
     unlink $output_tex_file;
 }
 
-done_testing( 9 );
+{
+    # does the year info come through to the report?
+    my $output_tex_file = "torque_statistics.tex";
+    unlink $output_tex_file if -f $output_tex_file;
+    my $error = system "perl torque_statistics.pl --year=2010";
+    open my $fh, "<", $output_tex_file;
+    my @tex_file_text = <$fh>;
+    close $fh;
+    my $expected_period_text = "For the year 2010";
+    my $got_text = join '', @tex_file_text;
+    like( $got_text, qr/$expected_period_text/,
+        "Expected reporting period text in TeX file" );
+    unlink $output_tex_file;
+}
+
+done_testing( 10 );
 
 # vim: expandtab shiftwidth=4
