@@ -31,6 +31,14 @@ use Test::More;
 }
 
 {
+    my $output_tex_file = "torque_statistics.tex";
+    unlink $output_tex_file if -f $output_tex_file;
+    my $error = system "perl torque_statistics.pl --month=08";
+    ok( -f "torque_statistics.tex",
+        "Program generates a TeX file" );
+    unlink $output_tex_file if -f $output_tex_file;
+}
+
     my $error = system "perl torque_statistics.pl --year=2013";
     ok( $error == 0,
         "Program accepts --year option" );
@@ -42,6 +50,6 @@ use Test::More;
         "Program accepts --month and --year option" );
 }
 
-done_testing( 6 );
+done_testing( 7 );
 
 # vim: expandtab shiftwidth=4
