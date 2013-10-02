@@ -5,21 +5,23 @@ use warnings FATAL => 'all';
 use autodie;
 
 use Test::More;
-use IO::Capture::Stderr;
 
 {
     require_ok("torque_statistics.pl");
 }
 
 {
-    my $output_tex_file = "torque_statistics.tex";
-    unlink $output_tex_file;
-    my $error = system "perl torque_statistics.pl";
-    ok( $error == 0,
-        "Program returns zero without options" );
-    ok( -f $output_tex_file,
-        "TeX file created from program run" );
-    unlink $output_tex_file;
+    my $error = system "perl torque_statistics.pl > /dev/null";
+    ok( $error != 0,
+        "Program returns failure without options" );
+}
+
+{
+    # print usage if no options are given
+    my $error_text = qx{ perl torque_statistics.pl };
+    my $usage_text = "Usage:";
+    like( $error_text, qr/$usage_text/,
+        "Usage text printed when program run without options" );
 }
 
 {
