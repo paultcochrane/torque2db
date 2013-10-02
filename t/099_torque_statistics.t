@@ -31,6 +31,18 @@ use Test::More;
 }
 
 {
+    my $error = system "perl torque_statistics.pl --year=2013";
+    ok( $error == 0,
+        "Program accepts --year option" );
+}
+
+{
+    my $error = system "perl torque_statistics.pl --month=08 --year=2013";
+    ok( $error == 0,
+        "Program accepts --month and --year option" );
+}
+
+{
     my $output_tex_file = "torque_statistics.tex";
     unlink $output_tex_file if -f $output_tex_file;
     my $error = system "perl torque_statistics.pl --month=08";
@@ -55,17 +67,20 @@ use Test::More;
 }
 
 {
-    my $error = system "perl torque_statistics.pl --year=2013";
-    ok( $error == 0,
-        "Program accepts --year option" );
+    # does the month info come through to the report?
+    my $output_tex_file = "torque_statistics.tex";
+    unlink $output_tex_file if -f $output_tex_file;
+    my $error = system "perl torque_statistics.pl --month=10";
+    open my $fh, "<", $output_tex_file;
+    my @tex_file_text = <$fh>;
+    close $fh;
+    my $expected_period_text = "For the period 10";
+    my $got_text = join '', @tex_file_text;
+    like( $got_text, qr/$expected_period_text/,
+        "Expected reporting period text in TeX file" );
+    unlink $output_tex_file;
 }
 
-{
-    my $error = system "perl torque_statistics.pl --month=08 --year=2013";
-    ok( $error == 0,
-        "Program accepts --month and --year option" );
-}
-
-done_testing( 8 );
+done_testing( 9 );
 
 # vim: expandtab shiftwidth=4
