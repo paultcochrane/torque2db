@@ -26,8 +26,8 @@ use Test::More;
 
 {
     my $error = system "perl torque_statistics.pl --month=08";
-    ok( $error == 0,
-        "Program accepts --month option" );
+    ok( $error != 0,
+        "Program requires --year with --month option" );
 }
 
 {
@@ -45,7 +45,7 @@ use Test::More;
 {
     my $output_tex_file = "torque_statistics.tex";
     unlink $output_tex_file if -f $output_tex_file;
-    my $error = system "perl torque_statistics.pl --month=08";
+    my $error = system "perl torque_statistics.pl --month=08 --year=2013";
     ok( -f "torque_statistics.tex",
         "Program generates a TeX file" );
     unlink $output_tex_file if -f $output_tex_file;
@@ -55,7 +55,7 @@ use Test::More;
     # does the month info come through to the report?
     my $output_tex_file = "torque_statistics.tex";
     unlink $output_tex_file if -f $output_tex_file;
-    my $error = system "perl torque_statistics.pl --month=08";
+    my $error = system "perl torque_statistics.pl --month=08 --year=2013";
     open my $fh, "<", $output_tex_file;
     my @tex_file_text = <$fh>;
     close $fh;
@@ -70,7 +70,7 @@ use Test::More;
     # does the month info come through to the report?
     my $output_tex_file = "torque_statistics.tex";
     unlink $output_tex_file if -f $output_tex_file;
-    my $error = system "perl torque_statistics.pl --month=10";
+    my $error = system "perl torque_statistics.pl --month=10 --year=2010";
     open my $fh, "<", $output_tex_file;
     my @tex_file_text = <$fh>;
     close $fh;

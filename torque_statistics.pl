@@ -81,7 +81,8 @@ sub read_cmd_line_options {
                             "year=s"  => \$year,
                     );
     pod2usage(2) if not $result;
-    pod2usage(1) unless ( $month or $year );
+    pod2usage(1) if ( $month and not $year );
+    pod2usage(1) unless ( $year );
 
     my $options = Options->new();
     $options->month( $month ) if $month;
