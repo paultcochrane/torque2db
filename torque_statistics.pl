@@ -32,6 +32,9 @@ use strict;
 use warnings FATAL => 'all';
 use autodie;
 use Getopt::Long;
+use Pod::Usage;
+
+use Options;
 
 =over 4
 
@@ -42,36 +45,49 @@ Runs the main code loop.
 =cut
 
 sub main {
-    my $month_date;
-    my $year_date;
-    my $result = GetOptions(
-                            "month=s" => \$month_date,
-                            "year=s"  => \$year_date,
-                    );
-    die "Options error" if not $result;
+    my $options = read_cmd_line_options();
 
-    my $stub_latex_text = <<'EOF';
-\documentclass{scrartcl}
+    my $date_text = 7; #$options->month();
+    my $stub_latex_text = <<"EOF";
+\\documentclass{scrartcl}
 
-\begin{document}
+\\begin{document}
 
-\title{Title text}
-\author{}
-\date{Date text}
+\\title{Title text}
+\\subtitle{For the period $date_text}
+\\author{}
+\\date{Date text}
 
-\maketitle
+\\maketitle
 
-\tableofcontents
+\\tableofcontents
 
-\section{Introduction}
+\\section{Introduction}
 
-\end{document}
+\\end{document}
 EOF
 
     my $latex_fname = "torque_statistics.tex";
     open my $latex_fh, ">", $latex_fname;
     print $latex_fh $stub_latex_text;
     close $latex_fh;
+}
+
+sub read_cmd_line_options {
+    my $month;
+    my $year;
+    my $result = GetOptions(
+                            "month=s" => \$month,
+                            "year=s"  => \$year,
+                    );
+    pod2usage(2) if not $result;
+    pod2usage(1) unless ( $month or $year );
+
+    my $options = Options->new();
+    $options->month( $month ) if $month;
+    $options->year( $year ) if $year;
+
+    return $options;
 }
 
 main() unless caller();
