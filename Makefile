@@ -11,7 +11,7 @@ $(basename).pdf: $(basename).tex
 	pdflatex $<
 
 $(basename).tex:
-	perl $(basename).pl
+	perl $(basename).pl --month=08 --year=2013
 
 test:
 	cover -delete
